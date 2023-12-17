@@ -67,7 +67,7 @@ settingsDir="/var/www/html/sites/default"
 cp $gitDir/settings.php $settingsDir/
 
 #copies themes
-cp -R themes/* /var/www/html/themes/
+cp -R $gitDir/themes/* /var/www/html/themes/
 
 
 echo "Database '$dbName' created and data imported successfully."
