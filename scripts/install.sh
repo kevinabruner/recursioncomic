@@ -9,7 +9,7 @@ sudo rm -R /var/www/html
 cd /var/www/
 
 composer install
-cd -
+cd ~/recursioncomic
 cp -R themes/* /var/www/html/themes/
 
 ln -s /var/www/web /var/www/html
