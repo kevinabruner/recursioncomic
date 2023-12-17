@@ -2,6 +2,10 @@
 
 gitDir=$PWD
 
+dbName="drupal"
+username='root'
+password='obo74Cle'
+
 #installs dependencies
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
@@ -10,15 +14,19 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php
 
 ###nfs mounting###
 nfsEntries=(
-    "192.168.11.20:/mnt/yes/proxmox    /home/kevin/nfs_test    nfs    defaults    0 0"
+    /home/kevin/db-dumps
+    /var/www/html/sites/default/files
 )
 
 # Loop through each entry in nfsEntries
 for entry in "${nfsEntries[@]}"; do
+    sudo mkdir -p $entry
+    sudo chown kevin:www-data $entry
+    nfsEntry="192.168.11.20:/mnt/yes/proxmox/gitbuilds/recursioncomic/$(basename $entry)    $entry  nfs    defaults    0 0"
     # Check if the entry exists in /etc/fstab
-    if ! grep -qF "$entry" /etc/fstab; then
+    if ! grep -qF "$nfsEntry" /etc/fstab; then
         # If entry does not exist, append it to /etc/fstab
-        echo "$entry" | sudo tee -a /etc/fstab >/dev/null
+        echo "$nfsEntry" | sudo tee -a /etc/fstab >/dev/null
         echo "Added: $entry to /etc/fstab"
     else
         echo "Entry already exists: $entry"
