@@ -78,5 +78,7 @@ sudo systemctl apache2 restart
 
 cd /var/www
 
-drush cr
-drush updb
+$drush='/var/www/vendor/drush/drush/drush'
+
+$drush cr
+$drush updb
