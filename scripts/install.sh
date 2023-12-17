@@ -15,11 +15,13 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php php-gd php-pdo php-mysql php-dom ncdu gh composer vim nfs-common
 
+sed -i 's#DocumentRoot /var/www/html#DocumentRoot /var/www/web/#' /etc/apache2/sites-enabled/000-default.conf
+
 
 ###nfs mounting###
 nfsEntries=(
     /home/kevin/db-dumps
-    /var/www/html/sites/default/files
+    /var/www/web/sites/default/files
 )
 
 # Loop through each entry in nfsEntries
@@ -42,13 +44,13 @@ sudo mount -a
 ###chowning the web folders###
 sudo chown -R kevin:www-data /var/www
 cp composer.json composer.lock /var/www/
-sudo rm -R /var/www/html
+sudo rm -R /var/www/web
 cd /var/www/
 
 ###installing composer###
 composer install
 cd $gitDir
-ln -s /var/www/web /var/www/html
+ln -s /var/www/web /var/www/web
 
 
 ###database import###
@@ -67,11 +69,11 @@ mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
 
 
 #adjusts the local settings
-settingsDir="/var/www/html/sites/default"
+settingsDir="/var/www/web/sites/default"
 cp $gitDir/settings.php $settingsDir/
 
 #copies themes
-cp -R $gitDir/themes/* /var/www/html/themes/contrib/
+cp -R $gitDir/themes/* /var/www/web/themes/contrib/
 
 
 echo "Database '$dbName' created and data imported successfully."
