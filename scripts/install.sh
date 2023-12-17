@@ -54,7 +54,12 @@ ln -s /var/www/web /var/www/html
 sqlFile="/home/kevin/db-dumps/drupal.sql" 
 
 # Create the database
-mysql -u"$username" -p"$password" -e "CREATE DATABASE IF NOT EXISTS $dbName;"
+sudo mysql -e "CREATE DATABASE IF NOT EXISTS $dbName;"
+
+#mysql users
+sudo mysql -e "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$username'@'localhost';"
+sudo mysql -e "FLUSH PRIVILEGES;"
 
 # Import data into the database from SQL file
 mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
