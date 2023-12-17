@@ -75,5 +75,9 @@ cp $gitDir/settings.php $settingsDir/
 #copies themes
 cp -R $gitDir/themes/* /var/www/web/themes/contrib/
 
+sudo systemctl apache2 restart
 
-echo "Database '$dbName' created and data imported successfully."
+cd /var/www
+
+drush cr
+drush updb
