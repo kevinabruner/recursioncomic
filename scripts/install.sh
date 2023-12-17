@@ -6,6 +6,10 @@ dbName="drupal"
 username='drupal'
 password='obo74Cle'
 
+#drush alias
+grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> ~/.bashrc
+
+
 #installs dependencies
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
