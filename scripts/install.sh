@@ -48,15 +48,13 @@ cp -R themes/* /var/www/html/themes/
 ln -s /var/www/web /var/www/html
 
 
-
-#database import
-
+###database import###
 sqlFile="/home/kevin/db-dumps/drupal.sql" 
 
 # Create the database
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS $dbName;"
 
-#mysql users
+#mysql user
 sudo mysql -e "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';"
 sudo mysql -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$username'@'localhost';"
 sudo mysql -e "FLUSH PRIVILEGES;"
@@ -64,7 +62,17 @@ sudo mysql -e "FLUSH PRIVILEGES;"
 # Import data into the database from SQL file
 mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
 
+
+#adjusts the local settings
+settingsDir="/var/www/html/sites/default"
+cp $gitDir/settings.php $settingsDir/
+
+
+
+
 echo "Database '$dbName' created and data imported successfully."
+
+
 
 
 
