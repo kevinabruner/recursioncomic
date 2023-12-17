@@ -75,11 +75,3 @@ cp -R $gitDir/themes/* /var/www/html/themes/contrib/
 
 
 echo "Database '$dbName' created and data imported successfully."
-
-
-
-
-
-
-
-#file connection
