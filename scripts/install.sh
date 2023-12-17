@@ -49,10 +49,17 @@ ln -s /var/www/web /var/www/html
 
 
 
-
-
-
 #database import
+
+sqlFile="/home/kevin/db-dumps/drupal.sql" 
+
+# Create the database
+mysql -u"$username" -p"$password" -e "CREATE DATABASE IF NOT EXISTS $dbName;"
+
+# Import data into the database from SQL file
+mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
+
+echo "Database '$dbName' created and data imported successfully."
 
 
 
