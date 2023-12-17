@@ -44,7 +44,6 @@ cd /var/www/
 ###installing composer###
 composer install
 cd $gitDir
-cp -R themes/* /var/www/html/themes/
 ln -s /var/www/web /var/www/html
 
 
@@ -67,7 +66,8 @@ mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
 settingsDir="/var/www/html/sites/default"
 cp $gitDir/settings.php $settingsDir/
 
-
+#copies themes
+cp -R themes/* /var/www/html/themes/
 
 
 echo "Database '$dbName' created and data imported successfully."
