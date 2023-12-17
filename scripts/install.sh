@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gitDir=$PWD
+gitDir=~/recursioncomic
 
 dbName="drupal"
 username='drupal'
