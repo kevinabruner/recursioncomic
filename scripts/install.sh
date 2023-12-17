@@ -3,7 +3,7 @@
 gitDir=$PWD
 
 dbName="drupal"
-username='root'
+username='drupal'
 password='obo74Cle'
 
 #installs dependencies
