@@ -44,13 +44,12 @@ sudo mount -a
 ###chowning the web folders###
 sudo chown -R kevin:www-data /var/www
 cp composer.json composer.lock /var/www/
-sudo rm -R /var/www/web
+sudo rm -R /var/www/web /var/www/html
 cd /var/www/
 
 ###installing composer###
 composer install
 cd $gitDir
-ln -s /var/www/web /var/www/web
 
 
 ###database import###
