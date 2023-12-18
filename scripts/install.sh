@@ -1,11 +1,11 @@
 #!/bin/bash
 
 application="recursioncomic"
-linuxUser=$USER
+linuxUser=$SUDO_USER
 
 #$usermod -aG $
 
-echo "running as $(logname))"
+echo "running as $linuxUser" 
 
 exit
 
