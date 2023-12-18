@@ -21,6 +21,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php
 
 echo "The dbusername is $username"
 
+echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+echo "application: $application"
+
 
 ###nfs mounting###
 nfsEntries=(
