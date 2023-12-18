@@ -3,20 +3,10 @@
 application="recursioncomic"
 linuxUser="kevin"
 
-
-
 dbName=$1
 username=$2
 password=$3
 gitDir=$4
-
-echo "The dbusername is $username\n"
-echo "Do any echos work?"
-echo "GITHUB_WORKSPACE: $gitDir\n"
-echo "application: $application\n"
-
-exit
-
 
 #drush alias
 grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> /home/$linuxUser/.bashrc
