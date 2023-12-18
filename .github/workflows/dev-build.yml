@@ -11,16 +11,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up environment
-        run: |
-          # Set environment variables from secrets
-          export DBNAME=${{ secrets.DBNAME }}
-          export DBPASSWORD=${{ secrets.DBPASSWORD }}
-          export DBUSER=${{ secrets.DBUSER }}
+        uses: actions/checkout@v2      
 
       - name: Run script
         run: |
           # Your script using the populated variables
-          sudo /home/kevin/recursioncomic/scripts/install.sh $DBNAME $DBUSER $DBPASSWORD
+          sudo /home/kevin/recursioncomic/scripts/install.sh ${{ secrets.DBNAME }} ${{ secrets.DBUSER }} ${{ secrets.DBPASSWORD }}
