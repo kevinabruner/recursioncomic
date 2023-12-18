@@ -50,7 +50,7 @@ sudo rm -R /var/www/web /var/www/html
 cd /var/www/
 
 ###installing composer###
-yes | sudo -u $linuxUser:www-data composer install
+yes | sudo -u $linuxUser -g www-data composer install
 cd $gitDir
 
 ###database import###
