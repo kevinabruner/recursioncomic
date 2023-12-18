@@ -112,4 +112,4 @@ cd /var/www
 drush='/var/www/vendor/drush/drush/drush'
 
 $drush cr
-yes | sudo -u $linuxUser:www-data drush updb
+yes | sudo -u $linuxUser drush updb

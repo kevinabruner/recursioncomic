@@ -16,6 +16,8 @@ $settings['entity_update_backup'] = TRUE;
 
 $settings['migrate_node_migrate_type_classic'] = FALSE;
 
+$settings['hash_salt'] = 'thisiskindrandomiguess';
+
 $databases['default']['default'] = array (
   'database' => '',
   'username' => '',
