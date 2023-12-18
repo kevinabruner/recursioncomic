@@ -15,5 +15,5 @@ jobs:
 
       - name: Run script
         run: |
-          # Your script using the populated variables
-          sudo /home/kevin/recursioncomic/scripts/install.sh ${{ secrets.DBNAME }} ${{ secrets.DBUSER }} ${{ secrets.DBPASSWORD }} ${{ github.workspace }} 
+          # Your script using the populated variables          
+          sudo ${{ github.workspace }}/scripts/install.sh ${{ secrets.DBNAME }} ${{ secrets.DBUSER }} ${{ secrets.DBPASSWORD }} ${{ github.workspace }} ${GITHUB_REPOSITORY#*/} > /home/kevin/installLog.txt
