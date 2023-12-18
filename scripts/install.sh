@@ -89,7 +89,7 @@ sudo sed -i 's#<Directory "/var/www/html">.*AllowOverride None.*</Directory>#<Di
 
 sudo a2enmod rewrite
 
-sudo systemctl apache2 restart
+sudo systemctl restart apache2
 
 cd /var/www
 
