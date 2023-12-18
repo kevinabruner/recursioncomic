@@ -1,7 +1,13 @@
 #!/bin/bash
 
 application="recursioncomic"
-linuxUser="kevin"
+linuxUser=$USER
+
+#$usermod -aG $
+
+echo "running as $USER"
+
+exit
 
 dbName=$1
 username=$2
@@ -15,9 +21,6 @@ grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'a
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php php-gd php-pdo php-mysql php-dom ncdu gh composer vim nfs-common
-
-
-
 
 ###nfs mounting###
 nfsEntries=(
@@ -41,7 +44,6 @@ for entry in "${nfsEntries[@]}"; do
 done
 
 sudo mount -a
-
 
 ###chowning the web folders###
 sudo chown -R $linuxUser:www-data /var/www
@@ -70,7 +72,6 @@ sudo mysql -e "FLUSH PRIVILEGES;"
 # Import data into the database from SQL file
 mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
 
-
 #adjusts the local settings
 settingsDir="/var/www/web/sites/default"
 cd $settingsDir
@@ -94,19 +95,15 @@ sudo systemctl enable apache2.service
 sudo systemctl start apache2.service
 
 sudo sed -i 's#\s*DocumentRoot /var/www/html#DocumentRoot /var/www/web/#' /etc/apache2/sites-enabled/000-default.conf
-
 sudo sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 sudo a2enmod rewrite
 
-sudo chown -R $linuxUser:www-data /var/www
-
 sudo systemctl restart apache2
 
 filesDir="/var/www/web/sites/default/files/"
-mkdir -p $filesDir
 
-cp -R /home/$linuxUser/files/* /var/www/web/sites/default/files/
+cp -R /home/$linuxUser/files/* $filesDir
 
 cd /var/www
 
