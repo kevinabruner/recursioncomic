@@ -71,7 +71,15 @@ mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
 
 #adjusts the local settings
 settingsDir="/var/www/web/sites/default"
-cp $gitDir/settings.php $settingsDir/
+cd $settingsDir
+cp $gitDir settings.php $settingsDir/
+# Replace values in settings.php
+sed -i.bak -E "s/^\s*'database'\s*=>\s*'[^']+'/  'database' => '$dbName'/" settings.php
+sed -i.bak -E "s/^\s*'username'\s*=>\s*'[^']+'/  'username' => '$username'/" settings.php
+sed -i.bak -E "s/^\s*'password'\s*=>\s*'[^']+'/  'password' => '$password'/" settings.php
+
+# Remove backup files created by sed
+rm settings.php.bak
 
 #copies themes
 cp -R $gitDir/themes/* /var/www/web/themes/contrib/
