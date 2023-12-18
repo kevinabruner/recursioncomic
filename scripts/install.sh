@@ -48,7 +48,7 @@ sudo rm -R /var/www/web /var/www/html
 cd /var/www/
 
 ###installing composer###
-composer install
+yes | composer install
 cd $gitDir
 
 
@@ -89,7 +89,7 @@ sudo systemctl apache2 restart
 
 cd /var/www
 
-$drush='/var/www/vendor/drush/drush/drush'
+drush='/var/www/vendor/drush/drush/drush'
 
 $drush cr
-$drush updb
+yes | $drush updb
