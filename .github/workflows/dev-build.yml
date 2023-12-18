@@ -23,4 +23,4 @@ jobs:
       - name: Run script
         run: |
           # Your script using the populated variables
-          ./scripts/install.sh $DBNAME $DBUSER $DBPASSWORD
+          sudo ./scripts/install.sh $DBNAME $DBUSER $DBPASSWORD
