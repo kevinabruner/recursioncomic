@@ -2,13 +2,12 @@
 
 application="recursioncomic"
 linuxUser="kevin"
-gitDir="$GITHUB_WORKSPACE"
+#gitDir="$GITHUB_WORKSPACE"
+gitDir="/home/$linuxUser/$application"
 
 dbName=$1
 username=$2
 password=$3
-
-
 
 #drush alias
 grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> /home/$linuxUser/.bashrc
