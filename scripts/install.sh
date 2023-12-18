@@ -2,7 +2,7 @@
 
 application="recursioncomic"
 linuxUser="kevin"
-gitDir=~/$application
+gitDir=/home/$linuxUser/$application
 
 dbName=$1
 username=$2
