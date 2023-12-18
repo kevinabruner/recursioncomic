@@ -1,14 +1,15 @@
 #!/bin/bash
 
-application="recursioncomic"
-linuxUser=$SUDO_USER
-
-usermod -aG www-data $linuxUser
-
+#vars passed in from github
 dbName=$1
 username=$2
 password=$3
 gitDir=$4
+application=$5
+
+#sets the user permissions
+linuxUser=$SUDO_USER
+usermod -aG www-data $linuxUser
 
 #drush alias
 grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> /home/$linuxUser/.bashrc
@@ -40,6 +41,7 @@ for entry in "${nfsEntries[@]}"; do
 done
 
 sudo mount -a
+
 
 ###chowning the web folders###
 sudo chown -R $linuxUser:www-data /var/www
