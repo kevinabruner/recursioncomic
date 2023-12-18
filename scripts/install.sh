@@ -91,6 +91,8 @@ sudo a2enmod rewrite
 
 sudo systemctl restart apache2
 
+ln -s /home/$linuxUser/files /var/www/html/sites/default/files
+
 cd /var/www
 
 drush='/var/www/vendor/drush/drush/drush'
