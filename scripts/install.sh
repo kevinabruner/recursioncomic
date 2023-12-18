@@ -51,7 +51,6 @@ cd /var/www/
 yes | composer install
 cd $gitDir
 
-
 ###database import###
 sqlFile="/home/$linuxUser/db-dumps/drupal.sql" 
 
@@ -91,7 +90,10 @@ sudo a2enmod rewrite
 
 sudo systemctl restart apache2
 
-ln -s /home/$linuxUser/files /var/www/html/sites/default/files
+filesDir="/var/www/web/sites/default/files/"
+mkdir $filesDir
+
+cp -R /home/$linuxUser/files/* /var/www/web/sites/default/files/
 
 cd /var/www
 
