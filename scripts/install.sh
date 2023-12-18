@@ -80,8 +80,8 @@ cp -R $gitDir/themes/* /var/www/web/themes/contrib/
 
 ###apache config###
 
-sudo systemctl enable mysql.service
-sudo systemctl start mysql.service
+sudo systemctl enable apache2.service
+sudo systemctl start apache2.service
 
 sudo sed -i 's#\s*DocumentRoot /var/www/html#DocumentRoot /var/www/web/#' /etc/apache2/sites-enabled/000-default.conf
 
