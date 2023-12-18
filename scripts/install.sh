@@ -79,6 +79,10 @@ cp -R $gitDir/themes/* /var/www/web/themes/contrib/
 
 
 ###apache config###
+
+sudo systemctl enable mysql.service
+sudo systemctl start mysql.service
+
 sudo sed -i 's#\s*DocumentRoot /var/www/html#DocumentRoot /var/www/web/#' /etc/apache2/sites-enabled/000-default.conf
 
 sudo sed -i 's#<Directory "/var/www/html">.*AllowOverride None.*</Directory>#<Directory "/var/www/html">\n AllowOverride All\n</Directory>#' /etc/apache2/apache2.conf
