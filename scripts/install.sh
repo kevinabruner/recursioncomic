@@ -76,9 +76,10 @@ settingsDir="/var/www/web/sites/default"
 cd $settingsDir
 cp $gitDir/settings.php $settingsDir/
 # Replace values in settings.php
-sed -i.bak -E "s/^\s*'database'\s*=>\s*'[^']+'/  'database' => '$dbName'/" settings.php
-sed -i.bak -E "s/^\s*'username'\s*=>\s*'[^']+'/  'username' => '$username'/" settings.php
-sed -i.bak -E "s/^\s*'password'\s*=>\s*'[^']+'/  'password' => '$password'/" settings.php
+sed -i.bak -E "s/^\s*'database'\s*=>\s*'[^']*'/  'database' => '$dbName'/" settings.php
+sed -i.bak -E "s/^\s*'username'\s*=>\s*'[^']*'/  'username' => '$username'/" settings.php
+sed -i.bak -E "s/^\s*'password'\s*=>\s*'[^']*'/  'password' => '$password'/" settings.php
+
 
 # Remove backup files created by sed
 rm settings.php.bak
