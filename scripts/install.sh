@@ -19,10 +19,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php php-gd php-pdo php-mysql php-dom ncdu gh composer vim nfs-common
 
-echo "The dbusername is $username"
+printf "The dbusername is $username\n"
 
-echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-echo "application: $application"
+printf "GITHUB_WORKSPACE: $GITHUB_WORKSPACE\n"
+printf "application: $application\n"
 
 
 ###nfs mounting###
