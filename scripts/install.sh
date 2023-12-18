@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #vars passed in from github
+
 dbName=$1
 username=$2
 password=$3
