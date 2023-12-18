@@ -1,7 +1,7 @@
 #!/bin/bash
 
 application="recursioncomic"
-linuxUser="$linuxUser"
+linuxUser="kevin"
 gitDir=~/$application
 
 dbName="drupal"
