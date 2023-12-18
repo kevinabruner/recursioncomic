@@ -42,7 +42,7 @@ sudo mount -a
 
 ###chowning the web folders###
 sudo chown -R $linuxUser:www-data /var/www
-cp composer.json composer.lock /var/www/
+cp $gitDir/composer.json $gitDir/composer.lock /var/www/
 sudo rm -R /var/www/web /var/www/html
 cd /var/www/
 
