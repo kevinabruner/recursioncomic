@@ -8,6 +8,8 @@ dbName=$1
 username=$2
 password=$3
 
+echo "The dbusername is $username"
+
 #drush alias
 grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> ~/.bashrc
 
