@@ -11,7 +11,7 @@ password=$3
 gitDir=$4
 
 echo "The dbusername is $username\n"
-
+echo "Do any echos work?"
 echo "GITHUB_WORKSPACE: $gitDir\n"
 echo "application: $application\n"
 
