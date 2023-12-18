@@ -2,13 +2,12 @@ name: Populate Variables
 
 on:
   push:
-    branches:
-      - main
-      - dev
+    branches:      
+      - prod
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-prod:    
+    runs-on: [self-hosted, prod]
     
     steps:
       - name: Checkout code
