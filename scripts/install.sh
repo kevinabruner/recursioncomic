@@ -5,7 +5,7 @@ linuxUser=$USER
 
 #$usermod -aG $
 
-echo "running as $USER"
+echo "running as $(logname))"
 
 exit
 
