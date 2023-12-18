@@ -2,22 +2,27 @@
 
 application="recursioncomic"
 linuxUser="kevin"
-gitDir=~/$application
+
+
 
 #arguments from github secrets
 dbName=$1
 username=$2
 password=$3
-
-echo "The dbusername is $username"
+gitDir=$4
 
 #drush alias
-grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> ~/.bashrc
+grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> /home/$linuxUser/.bashrc
 
 #installs dependencies
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php php-gd php-pdo php-mysql php-dom ncdu gh composer vim nfs-common
+
+printf "The dbusername is $username\n"
+
+printf "GITHUB_WORKSPACE: $GITHUB_WORKSPACE\n"
+printf "application: $application\n"
 
 
 ###nfs mounting###
@@ -50,7 +55,7 @@ sudo rm -R /var/www/web /var/www/html
 cd /var/www/
 
 ###installing composer###
-yes | composer install
+yes | sudo -u $linuxUser:www-data composer install
 cd $gitDir
 
 ###database import###
@@ -98,6 +103,8 @@ sudo sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/All
 
 sudo a2enmod rewrite
 
+sudo chown -R $linuxUser:www-data /var/www
+
 sudo systemctl restart apache2
 
 filesDir="/var/www/web/sites/default/files/"
@@ -110,4 +117,4 @@ cd /var/www
 drush='/var/www/vendor/drush/drush/drush'
 
 $drush cr
-yes | $drush updb
+yes | sudo -u $linuxUser:www-data drush updb
