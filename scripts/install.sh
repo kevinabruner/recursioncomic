@@ -4,6 +4,7 @@ application="recursioncomic"
 linuxUser="kevin"
 gitDir=~/$application
 
+#arguments from github secrets
 dbName=$1
 username=$2
 password=$3
