@@ -15,6 +15,8 @@ echo "Do any echos work?"
 echo "GITHUB_WORKSPACE: $gitDir\n"
 echo "application: $application\n"
 
+exit
+
 
 #drush alias
 grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> /home/$linuxUser/.bashrc
