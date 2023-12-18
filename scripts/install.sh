@@ -42,7 +42,6 @@ done
 
 sudo mount -a
 
-
 ###chowning the web folders###
 sudo chown -R $linuxUser:www-data /var/www
 cp $gitDir/composer.json $gitDir/composer.lock /var/www/
