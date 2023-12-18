@@ -74,7 +74,7 @@ mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
 #adjusts the local settings
 settingsDir="/var/www/web/sites/default"
 cd $settingsDir
-cp $gitDir settings.php $settingsDir/
+cp $gitDir/settings.php $settingsDir/
 # Replace values in settings.php
 sed -i.bak -E "s/^\s*'database'\s*=>\s*'[^']+'/  'database' => '$dbName'/" settings.php
 sed -i.bak -E "s/^\s*'username'\s*=>\s*'[^']+'/  'username' => '$username'/" settings.php
