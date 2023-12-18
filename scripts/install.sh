@@ -8,7 +8,7 @@ dbName=$1
 username=$2
 password=$3
 
-echo "The dbusername is $username"
+
 
 #drush alias
 grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> ~/.bashrc
@@ -17,6 +17,8 @@ grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'a
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php php-gd php-pdo php-mysql php-dom ncdu gh composer vim nfs-common
+
+echo "The dbusername is $username"
 
 
 ###nfs mounting###
