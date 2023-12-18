@@ -21,7 +21,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php
 ###nfs mounting###
 nfsEntries=(
     /home/$linuxUser/db-dumps
-    /var/www/web/sites/default/files
+    /home/$linuxUser/files
 )
 
 # Loop through each entry in nfsEntries
