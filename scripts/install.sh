@@ -102,6 +102,8 @@ filesDir="/var/www/web/sites/default/files/"
 
 cp -R /home/$linuxUser/files/* $filesDir
 
+sudo chown -R $linuxUser:www-data /var/www
+
 cd /var/www
 
 drush='/var/www/vendor/drush/drush/drush'
