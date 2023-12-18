@@ -2,7 +2,7 @@
 
 application="recursioncomic"
 linuxUser="kevin"
-gitDir=/home/$linuxUser/$application
+gitDir="$GITHUB_WORKSPACE"
 
 dbName=$1
 username=$2
