@@ -100,9 +100,9 @@ systemctl restart apache2
 
 filesDir="/var/www/web/sites/default/files/"
 
-cp -R /home/$linuxUser/files/* $filesDir
+rsync -avr /home/$linuxUser/files $filesDir
 
-sudo chown -R $linuxUser:www-data /var/www
+chown -R $linuxUser:www-data /var/www
 
 cd /var/www
 
