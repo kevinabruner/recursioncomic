@@ -84,7 +84,7 @@ sudo systemctl start apache2.service
 
 sudo sed -i 's#\s*DocumentRoot /var/www/html#DocumentRoot /var/www/web/#' /etc/apache2/sites-enabled/000-default.conf
 
-sudo sed -i 's#<Directory "/var/www/html">.*AllowOverride None.*</Directory>#<Directory "/var/www/html">\n AllowOverride All\n</Directory>#' /etc/apache2/apache2.conf
+sudo sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 sudo a2enmod rewrite
 
