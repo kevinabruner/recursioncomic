@@ -51,7 +51,7 @@ sudo rm -R /var/www/web /var/www/html
 cd /var/www/
 
 ###installing composer###
-yes | composer install
+yes | sudo -u $linuxUser:www-data composer install
 cd $gitDir
 
 ###database import###
@@ -98,6 +98,8 @@ sudo sed -i 's#\s*DocumentRoot /var/www/html#DocumentRoot /var/www/web/#' /etc/a
 sudo sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 sudo a2enmod rewrite
+
+sudo chown -R $linuxUser:www-data /var/www
 
 sudo systemctl restart apache2
 
