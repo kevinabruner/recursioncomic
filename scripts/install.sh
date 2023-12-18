@@ -55,6 +55,9 @@ cd $gitDir
 ###database import###
 sqlFile="/home/$linuxUser/db-dumps/drupal.sql" 
 
+sudo systemctl enable mysql.service
+sudo systemctl start mysql.service
+
 # Create the database
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS $dbName;"
 
