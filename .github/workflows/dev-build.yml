@@ -16,4 +16,6 @@ jobs:
       - name: Run script
         run: |
           # Your script using the populated variables
+          echo ${{ github.workspace }}/scripts/install.sh
+          echo $USER
           sudo ${{ github.workspace }}/scripts/install.sh ${{ secrets.DBNAME }} ${{ secrets.DBUSER }} ${{ secrets.DBPASSWORD }} ${{ github.workspace }} > /home/kevin/installLog.txt
