@@ -3,11 +3,7 @@
 application="recursioncomic"
 linuxUser=$SUDO_USER
 
-#$usermod -aG $
-
-echo "running as $linuxUser" 
-
-exit
+usermod -aG www-data $linuxUser
 
 dbName=$1
 username=$2
