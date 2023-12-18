@@ -1,3 +1,8 @@
 #!/bin/bash
+
+dbName="drupal"
+username='drupal'
+password='obo74Cle'
+
 cd /home/kevin/db-dumps
-sudo mysqldump drupal > drupal.sql
+mysqldump -u $username -p$password drupal > drupal.sql
