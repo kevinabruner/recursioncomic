@@ -11,7 +11,7 @@ password=$3
 
 
 #drush alias
-grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> ~/.bashrc
+grep -qxF 'alias drush="/var/www/vendor/drush/drush/drush"' ~/.bashrc || echo 'alias drush="/var/www/vendor/drush/drush/drush"' >> /home/$linuxUser/.bashrc
 
 #installs dependencies
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -yq
