@@ -91,7 +91,7 @@ sudo a2enmod rewrite
 sudo systemctl restart apache2
 
 filesDir="/var/www/web/sites/default/files/"
-mkdir $filesDir
+mkdir -p $filesDir
 
 cp -R /home/$linuxUser/files/* /var/www/web/sites/default/files/
 
