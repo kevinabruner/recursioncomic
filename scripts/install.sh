@@ -1,6 +1,8 @@
 #!/bin/bash
 
-gitDir=~/recursioncomic
+application="recursioncomic"
+linuxUser="$linuxUser"
+gitDir=~/$application
 
 dbName="drupal"
 username='drupal'
@@ -18,15 +20,15 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-server php
 
 ###nfs mounting###
 nfsEntries=(
-    /home/kevin/db-dumps
+    /home/$linuxUser/db-dumps
     /var/www/web/sites/default/files
 )
 
 # Loop through each entry in nfsEntries
 for entry in "${nfsEntries[@]}"; do
     sudo mkdir -p $entry
-    sudo chown kevin:www-data $entry
-    nfsEntry="192.168.11.20:/mnt/yes/proxmox/gitbuilds/recursioncomic/$(basename $entry)    $entry  nfs    defaults    0 0"
+    sudo chown $linuxUser:www-data $entry
+    nfsEntry="192.168.11.20:/mnt/yes/proxmox/gitbuilds/$application/$(basename $entry)    $entry  nfs    defaults    0 0"
     # Check if the entry exists in /etc/fstab
     if ! grep -qF "$nfsEntry" /etc/fstab; then
         # If entry does not exist, append it to /etc/fstab
@@ -40,7 +42,7 @@ done
 sudo mount -a
 
 ###chowning the web folders###
-sudo chown -R kevin:www-data /var/www
+sudo chown -R $linuxUser:www-data /var/www
 cp composer.json composer.lock /var/www/
 sudo rm -R /var/www/web /var/www/html
 cd /var/www/
@@ -51,7 +53,7 @@ cd $gitDir
 
 
 ###database import###
-sqlFile="/home/kevin/db-dumps/drupal.sql" 
+sqlFile="/home/$linuxUser/db-dumps/drupal.sql" 
 
 # Create the database
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS $dbName;"
