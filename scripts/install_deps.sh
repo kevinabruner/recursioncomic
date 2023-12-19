@@ -1,5 +1,6 @@
 #sets the user permissions
-linuxUser=$SUDO_USER
+linuxUser=$1
+
 usermod -aG www-data $linuxUser
 
 #drush alias
