@@ -1,6 +1,7 @@
 #!/bin/bash
 
 linuxUser=$1
+application=$2
 
 ###nfs mounting###
 nfsEntries=(
