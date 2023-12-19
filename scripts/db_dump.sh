@@ -1,9 +1,10 @@
 #!/bin/bash
+source /etc/environment
 
-dbName=$1
-username=$2
-password=$3
+cd /home/$linuxUser/db-dumps
 
-cd /home/kevin/db-dumps
+#dumps the live DB
 mysqldump -u $username -p$password drupal > drupal.sql
-rsync -avr /var/www/web/sites/default/files/* /home/kevin/files/
+
+#dumps the live user files
+rsync -avr /var/www/web/sites/default/files/* /home/$linuxUser/files/

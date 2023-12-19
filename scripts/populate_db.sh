@@ -1,10 +1,6 @@
 #!/bin/bash
 source /etc/environment
 
-dbName=$1
-username=$2
-password=$3
-
 ###database import###
 sqlFile="/home/$linuxUser/db-dumps/drupal.sql" 
 

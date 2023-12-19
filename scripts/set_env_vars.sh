@@ -1,8 +1,10 @@
 #!/bin/bash
-linuxUser=$1
-gitDir=$2
-application=$3
-branch=$4
+dbName=$1
+username=$2
+password=$3
+gitDir=$4
+application=$5
+branch=$6
 
 # Check if /etc/environment file exists and create it if not
 if [ ! -f /etc/environment ]; then
@@ -23,3 +25,6 @@ update_env "linuxUser" "$linuxUser"
 update_env "gitDir" "$gitDir"
 update_env "application" "$application"
 update_env "branch" "$branch"
+update_env "dbName" "$dbName"
+update_env "username" "$username"
+update_env "password" "$password"
