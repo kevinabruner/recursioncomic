@@ -9,15 +9,20 @@ branch=$5
 ###database import###
 sqlFile="/home/$linuxUser/db-dumps/drupal.sql" 
 
-# Create the database
-mysql -e "CREATE DATABASE IF NOT EXISTS $dbName;"
+# Check if the database exists
+databaseExists=$(mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='$dbName';" -s)
 
-echo "The branch is: $branch"
+if [ -z "$databaseExists" ]; then
+    # Create the database
+    mysql -e "CREATE DATABASE IF NOT EXISTS $dbName;"
 
-#mysql user
-mysql -e "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';"
-mysql -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$username'@'localhost';"
-mysql -e "FLUSH PRIVILEGES;"
+    #mysql user
+    mysql -e "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';"
+    mysql -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$username'@'localhost';"
+    mysql -e "FLUSH PRIVILEGES;"
 
-# Import data into the database from SQL file
-mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
+    # Import data into the database from SQL file
+    mysql -u"$username" -p"$password" "$dbName" < "$sqlFile"
+else
+  echo "Database already exists. Skipping creation and import."
+fi
