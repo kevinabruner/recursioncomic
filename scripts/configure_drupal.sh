@@ -6,6 +6,7 @@ password=$3
 gitDir=$4
 linuxUser=$5
 
+
 #adjusts the local settings
 settingsDir="/var/www/web/sites/default"
 cd $settingsDir
