@@ -1,5 +1,5 @@
 #sets the user permissions
-linuxUser=$1
+source /etc/environment
 
 usermod -aG www-data $linuxUser
 

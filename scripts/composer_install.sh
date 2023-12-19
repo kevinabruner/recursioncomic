@@ -1,6 +1,5 @@
 #!/bin/bash
-linuxUser=$1
-gitDir=$2
+source /etc/environment
 
 ###installing composer###
 cp $gitDir/composer.json $gitDir/composer.lock /var/www/

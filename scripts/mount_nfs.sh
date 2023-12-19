@@ -1,7 +1,5 @@
 #!/bin/bash
-
-linuxUser=$1
-application=$2
+source /etc/environment
 
 ###nfs mounting###
 nfsEntries=(

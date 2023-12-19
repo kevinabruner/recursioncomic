@@ -1,10 +1,9 @@
 #!/bin/bash
+source /etc/environment
 
 dbName=$1
 username=$2
 password=$3
-gitDir=$4
-linuxUser=$5
 
 
 #adjusts the local settings
