@@ -3,7 +3,7 @@ name: Populate Variables
 on:
   push:
     branches:      
-      - prod
+      - main
 
 jobs:
   build-prod:    
