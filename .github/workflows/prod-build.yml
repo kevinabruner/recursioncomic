@@ -12,15 +12,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up environment
-        run: |
-          # Set environment variables from secrets
-          export DBNAME=${{ secrets.DBNAME }}
-          export DBPASSWORD=${{ secrets.DBPASSWORD }}
-          export DBUSER=${{ secrets.DBUSER }}
-
+      
       - name: Run script
         run: |
-          # Your script using the populated variables
-          ./scripts/install.sh $DBNAME $DBUSER $DBPASSWORD
+          # Your script using the populated variables          
+          sudo ${{ github.workspace }}/scripts/install.sh \
+            ${{ secrets.DBNAME }} \
+            ${{ secrets.DBUSER }} \
+            ${{ secrets.DBPASSWORD }} \
+            ${{ github.workspace }} \
+            ${GITHUB_REPOSITORY#*/} \
+            ${{ github.ref }} \
+            > /home/kevin/installLog.txt
