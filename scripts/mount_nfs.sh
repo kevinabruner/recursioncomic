@@ -7,6 +7,7 @@ nfsEntries=(
     /home/$linuxUser/files
 )
 
+
 # Loop through each entry in nfsEntries
 for entry in "${nfsEntries[@]}"; do
     mkdir -p $entry
