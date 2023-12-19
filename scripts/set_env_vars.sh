@@ -5,6 +5,7 @@ password=$3
 gitDir=$4
 application=$5
 branch=$6
+linuxUser=$SUDO_USER
 
 # Check if /etc/environment file exists and create it if not
 if [ ! -f /etc/environment ]; then

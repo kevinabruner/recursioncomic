@@ -9,8 +9,6 @@ gitDir=$4
 application=$5
 branch=$6
 
-linuxUser=$SUDO_USER    
-
 
 bash $gitDir/scripts/set_env_vars.sh $dbName $username $password $gitDir $application $branch
 bash $gitDir/scripts/install_deps.sh 
