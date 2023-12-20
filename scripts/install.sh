@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#vars passed in from github
-
+###vars passed in from github###
 dbName=$1
 username=$2
 password=$3
@@ -9,7 +8,7 @@ gitDir=$4
 application=$5
 branch=$6
 
-
+###scriplets to install application***
 bash $gitDir/scripts/set_env_vars.sh $dbName $username $password $gitDir $application $branch
 bash $gitDir/scripts/install_deps.sh 
 bash $gitDir/scripts/mount_nfs.sh 
