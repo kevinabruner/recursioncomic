@@ -14,6 +14,6 @@ bash $gitDir/scripts/set_env_vars.sh $dbName $username $password $gitDir $applic
 bash $gitDir/scripts/install_deps.sh 
 bash $gitDir/scripts/mount_nfs.sh 
 bash $gitDir/scripts/composer_install.sh 
-bash $gitDir/scripts/populate_db.sh "$dbName" "$username" "$password" 
+bash $gitDir/scripts/populate_db.sh 
 bash $gitDir/scripts/configure_apache.sh
-bash $gitDir/scripts/configure_drupal.sh "$dbName" "$username" "$password"
+bash $gitDir/scripts/configure_drupal.sh 
