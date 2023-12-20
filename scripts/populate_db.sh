@@ -23,9 +23,7 @@ else
 fi
 
 
-
 ###crontab manipulation for DB backups****
-
 scriptPath=$gitDir/scripts/db_dump.sh
 
 # Check if the current branch is main
