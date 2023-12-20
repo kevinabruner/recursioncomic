@@ -1,11 +1,6 @@
 #!/bin/bash
 source /etc/environment
 
-dbName=$1
-username=$2
-password=$3
-
-
 #adjusts the local settings
 settingsDir="/var/www/web/sites/default"
 cd $settingsDir
