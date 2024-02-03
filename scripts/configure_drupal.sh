@@ -27,4 +27,4 @@ chown -R $linuxUser:www-data /var/www
 cd /var/www
 drush='/var/www/vendor/drush/drush/drush'
 $drush cr
-yes | sudo -u $linuxUser -g www-data $drush updb
+sudo -u $linuxUser -g www-data $drush updb
