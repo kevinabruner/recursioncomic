@@ -4,7 +4,7 @@ source /etc/environment
 ###nfs mounting###
 nfsEntries=(
     /home/$linuxUser/db-dumps
-    /home/$linuxUser/files
+    /var/www/web/sites/default/files/
 )
 
 

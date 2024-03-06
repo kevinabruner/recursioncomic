@@ -9,16 +9,13 @@ cp $gitDir/settings.php $settingsDir/
 sed -i.bak -E "s/^\s*'database'\s*=>\s*'[^']*'/  'database' => '$dbName'/" settings.php
 sed -i.bak -E "s/^\s*'username'\s*=>\s*'[^']*'/  'username' => '$username'/" settings.php
 sed -i.bak -E "s/^\s*'password'\s*=>\s*'[^']*'/  'password' => '$password'/" settings.php
+sed -i.bak -E "s/^\s*'host'\s*=>\s*'[^']*'/  'host' => '$dbHost'/" settings.php
 
 # Remove backup files created by sed
 rm settings.php.bak
 
 #copies themes
 cp -R $gitDir/themes/* /var/www/web/themes/contrib/
-
-#copies user-uploaded files stored in a network share   
-filesDir="/var/www/web/sites/default/files/"
-rsync -avr /home/$linuxUser/files/* $filesDir/ --ignore-existing
 
 #chowns the correct ownership
 chown -R $linuxUser:www-data /var/www
@@ -27,4 +24,4 @@ chown -R $linuxUser:www-data /var/www
 cd /var/www
 drush='/var/www/vendor/drush/drush/drush'
 $drush cr
-yes | sudo -u $linuxUser -g www-data $drush updb
+sudo -u $linuxUser -g www-data $drush updb
