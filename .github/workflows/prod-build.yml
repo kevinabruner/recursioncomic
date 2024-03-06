@@ -7,7 +7,10 @@ on:
 
 jobs:
   build-prod:    
-    runs-on: [self-hosted, prod]
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ web-recursion-prod2, web-recursion-prod1, prod ] # Replace with your runner names
     
     steps:
       - name: Checkout code
