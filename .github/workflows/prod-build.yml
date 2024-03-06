@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ web-recursion-prod2, web-recursion-prod1, prod ] # Replace with your runner names
+        runner: [ prod2, prod1 ] # Replace with your runner names
     
     steps:
       - name: Checkout code
