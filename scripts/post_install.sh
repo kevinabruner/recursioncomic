@@ -1,2 +1,2 @@
-sudo systemctl start apache2.service
 sudo mount -a
+sudo systemctl start apache2.service
