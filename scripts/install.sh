@@ -58,7 +58,7 @@ update_env "username" "$username"
 update_env "password" "$password"
 update_env "dbHost" "$dbHost"
 
-
+mysql-bin.000001 |    85151
 ###scriplets to install application***
 bash $gitDir/scripts/pre_install.sh 
 bash $gitDir/scripts/install_deps.sh 
