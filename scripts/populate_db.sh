@@ -2,7 +2,7 @@
 source /etc/environment
 
 ###database import###
-sqlFile="/home/$linuxUser/db-dumps/*.sql" 
+sqlFile="/home/$linuxUser/db-dumps/$dbName.sql" 
 
 # Check if the SQL file exists
 if [ -f "$sqlFile" ]; then        
