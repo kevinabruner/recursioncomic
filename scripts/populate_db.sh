@@ -22,6 +22,7 @@ if [ -f "$sqlFile" ]; then
     else
         echo "Database already exists. Skipping creation and import."
     fi
+fi
 
 ###crontab manipulation for DB backups****
 scriptPath=$gitDir/scripts/db_dump.sh
