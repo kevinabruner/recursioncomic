@@ -15,3 +15,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -yq apache2 mysql-client php php-
 #enables and starts services
 systemctl enable apache2.service
 systemctl start apache2.service
+
+##lets get some scripts to troubleshoot
+scriptsDir='/home/$linuxUser/scripts/'
+mkdir $scriptsDir
+cp ./* -R $scriptsDir
