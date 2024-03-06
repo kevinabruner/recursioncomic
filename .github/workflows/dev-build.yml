@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v2      
 
       - name: Run script
-        run: |
-          # Your script using the populated variables          
+        run: |          
           sudo ${{ github.workspace }}/scripts/install.sh \
-            ${{ secrets.DBNAME }} \
-            ${{ secrets.DBUSER }} \
-            ${{ secrets.DBPASSWORD }} \
-            ${{ github.workspace }} \
-            ${GITHUB_REPOSITORY#*/} \
-            ${{ github.ref }} \
+            -d ${{ secrets.DBNAME }} \
+            -u ${{ secrets.DBUSER }} \
+            -p ${{ secrets.DBPASSWORD }} \
+            -h ${{ secrets.DBIP }} \
+            -w ${{ github.workspace }} \
+            -a ${GITHUB_REPOSITORY#*/} \
+            -b ${{ github.ref }} \            
             > /home/kevin/installLog.txt
