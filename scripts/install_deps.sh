@@ -17,7 +17,7 @@ systemctl enable apache2.service
 systemctl start apache2.service
 
 ##lets get some scripts to troubleshoot
-scriptsDir="/home/$linuxUser/scripts/"
+scriptsDir="/home/$linuxUser/recursion-git-copy/"
 rm -R $scriptsDir
 mkdir $scriptsDir
-cp ./* -R $scriptsDir
+cp ./ -R $scriptsDir
