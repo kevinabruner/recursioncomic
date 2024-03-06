@@ -56,6 +56,7 @@ update_env "branch" "$branch"
 update_env "dbName" "$dbName"
 update_env "username" "$username"
 update_env "password" "$password"
+update_env "dbHost" "$dbHost"
 
 
 ###scriplets to install application***
