@@ -17,10 +17,6 @@ rm settings.php.bak
 #copies themes
 cp -R $gitDir/themes/* /var/www/web/themes/contrib/
 
-#copies user-uploaded files stored in a network share   
-#filesDir="/var/www/web/sites/default/files/"
-#rsync -avr /home/$linuxUser/files/* $filesDir/ --ignore-existing
-
 #chowns the correct ownership
 chown -R $linuxUser:www-data /var/www
 
