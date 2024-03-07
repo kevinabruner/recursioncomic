@@ -28,7 +28,7 @@ $databases['default']['default'] = array (
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
-$databases['default']['replica'] = array (
+$databases['default']['slave'] = array (
   'database' => '@@@dbName',
   'username' => '@@@username',
   'password' => '@@@password',
