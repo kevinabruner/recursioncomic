@@ -10,7 +10,7 @@ sed -i.bak -E "s/\@@@dbName/$dbName/g" settings.php
 sed -i.bak -E "s/\@@@username/$username/g" settings.php
 sed -i.bak -E "s/\@@@password/$password/g" settings.php
 sed -i.bak -E "s/\@@@dbHost/$dbHost/g" settings.php
-sed -i.bak -E "s/\@@@$replicaHost/$replicaHost/g" settings.php
+sed -i.bak -E "s/\@@@replicaHost/$replicaHost/g" settings.php
 
 # Remove backup files created by sed
 rm settings.php.bak
