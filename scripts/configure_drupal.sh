@@ -6,8 +6,15 @@ settingsDir="/var/www/web/sites/default"
 cd $settingsDir
 cp $gitDir/settings.php $settingsDir/
 # Replace values in settings.php
-sed -i.bak -E "s/^\s*'database'\s*=>\s*'[^']*'/  'database' => '$dbName'/" settings.php
-sed -i.bak -E "s/^\s*'username'\s*=>\s*'[^']*'/  'username' => '$username'/" settings.php
+sed -i.bak -E "s/\$\$\$dbName/$dbName/g" settings.php
+sed -i.bak -E "s/\$\$\$username/$username/g" settings.php
+sed -i.bak -E "s/\$\$\$password/$password/g" settings.php
+sed -i.bak -E "s/\$\$\$dbHost/$dbHost/g" settings.php
+sed -i.bak -E "s/\$\$\$replicaHost/$replicaHost/g" settings.php
+
+
+
+sed -i.bak -E "s/^\s*'password'\s*=>\s*'[^']*'/  'password' => '$password'/" settings.php
 sed -i.bak -E "s/^\s*'password'\s*=>\s*'[^']*'/  'password' => '$password'/" settings.php
 sed -i.bak -E "s/^\s*'host'\s*=>\s*'[^']*'/  'host' => '$dbHost'/" settings.php
 

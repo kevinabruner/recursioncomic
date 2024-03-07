@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTSTRING=":d:u:p:h:w:a:b:"
+OPTSTRING=":d:u:p:h:r:w:a:b:"
 
 while getopts ${OPTSTRING} opt; do
   case ${opt} in
@@ -15,6 +15,9 @@ while getopts ${OPTSTRING} opt; do
       ;;
     h)
       dbHost=$OPTARG
+      ;;
+    r)
+      replicaHost=$OPTARG
       ;;
     w)
       gitDir=$OPTARG
@@ -56,6 +59,7 @@ update_env "branch" "$branch"
 update_env "dbName" "$dbName"
 update_env "username" "$username"
 update_env "password" "$password"
+update_env "replicaHost" "$replicaHost"
 update_env "dbHost" "$dbHost"
 
 mysql-bin.000001 |    85151
