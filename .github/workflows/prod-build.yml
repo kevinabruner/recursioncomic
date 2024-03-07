@@ -23,6 +23,7 @@ jobs:
             -u ${{ secrets.DBUSER }} \
             -p ${{ secrets.DBPASSWORD }} \
             -h ${{ secrets.DBIP }} \
+            -r ${{ secrets.REPLICAIP }} \
             -w ${{ github.workspace }} \
             -a ${GITHUB_REPOSITORY#*/} \
             -b ${{ github.ref }} \            
