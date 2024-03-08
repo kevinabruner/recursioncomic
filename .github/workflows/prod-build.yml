@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ prod2, prod1 ] # Replace with your runner names
+        runner: [ prod2, prod1 ] 
     
     steps:
       - name: Checkout code
@@ -18,13 +18,4 @@ jobs:
 
       - name: Run script
         run: |          
-          sudo ${{ github.workspace }}/scripts/install.sh \
-            -d ${{ secrets.DBNAME }} \
-            -u ${{ secrets.DBUSER }} \
-            -p ${{ secrets.DBPASSWORD }} \
-            -h ${{ secrets.DBIP }} \
-            -r ${{ secrets.REPLICAIP }} \
-            -w ${{ github.workspace }} \
-            -a ${GITHUB_REPOSITORY#*/} \
-            -b ${{ github.ref }} \            
-            > /home/kevin/installLog.txt
+          sudo ${{ github.workspace }}/scripts/install.sh -d ${{ secrets.DBNAME }} -u ${{ secrets.DBUSER }} -p ${{ secrets.DBPASSWORD }} -h ${{ secrets.DBIP }} -r ${{ secrets.REPLICAIP }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt

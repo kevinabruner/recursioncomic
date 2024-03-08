@@ -8,7 +8,7 @@ sqlFile="/home/$linuxUser/db-dumps/$dbName.sql"
 scriptPath=$gitDir/scripts/db_dump.sh
 
 # Check if the current branch is main
-if [ "$branch" = "refs/heads/main" ]; then
+if [ "$server" = "prod1" ]; then
   # Check if the cron job already exists
   if ! crontab -l | grep -q "$scriptPath"; then
     # Add the cron job to run the script every night at 2 AM

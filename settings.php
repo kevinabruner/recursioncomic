@@ -28,14 +28,4 @@ $databases['default']['default'] = array (
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
-$databases['default']['slave'] = array (
-  'database' => '@@@dbName',
-  'username' => '@@@username',
-  'password' => '@@@password',
-  'prefix' => '',
-  'host' => '@@@replicaHost',
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-);
 $settings['config_sync_directory'] = 'sites/default/files/config_ciXpqQpUq-Xu3ZEcbz5ZB3OmDxY90bSKmtPG-CHuzxMGgcyFDxuYCMHwfcI8THYIkoSvDcvCnw/sync';

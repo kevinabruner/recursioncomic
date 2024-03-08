@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTSTRING=":d:u:p:h:r:w:a:b:"
+OPTSTRING=":d:u:p:h:r:w:a:b:s:"
 
 while getopts ${OPTSTRING} opt; do
   case ${opt} in
@@ -27,6 +27,9 @@ while getopts ${OPTSTRING} opt; do
       ;;
     b)
       branch=$OPTARG
+      ;;
+    s)
+      server=$OPTARG
       ;;
     ?)
       echo "Invalid option: -${OPTARG}."
@@ -61,6 +64,7 @@ update_env "username" "$username"
 update_env "password" "$password"
 update_env "replicaHost" "$replicaHost"
 update_env "dbHost" "$dbHost"
+update_env "server" "$server"
 
 mysql-bin.000001 |    85151
 ###scriplets to install application***
