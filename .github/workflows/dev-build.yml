@@ -27,4 +27,5 @@ jobs:
             -w ${{ github.workspace }} \
             -a ${GITHUB_REPOSITORY#*/} \
             -b ${{ github.ref }} \            
+            -s ${{ matrix.runner }} \
             > /home/kevin/installLog.txt
