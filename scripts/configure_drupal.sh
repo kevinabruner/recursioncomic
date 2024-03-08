@@ -6,7 +6,7 @@ settingsDir="/var/www/web/sites/default"
 cd $settingsDir
 cp $gitDir/settings.php $settingsDir/
 
-if [[ ${server} == 'prod1' || ${server} == 'prod2' ]; then
+if [[ ${server} == 'prod1' || ${server} == 'prod2' ]]; then
     $dbHost="192.168.11.40"
 else
     $dbHost="192.168.11.50"
