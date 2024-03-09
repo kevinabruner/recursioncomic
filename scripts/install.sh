@@ -1,15 +1,9 @@
 #!/bin/bash
 
-OPTSTRING=":d:u:p:w:a:b:s:"
+OPTSTRING=":p:w:a:b:s:"
 
 while getopts ${OPTSTRING} opt; do
   case ${opt} in
-    d)
-      dbName=$OPTARG
-      ;;
-    u)
-      username=$OPTARG
-      ;;
     p)
       password=$OPTARG
       ;;    
@@ -53,6 +47,9 @@ update_env() {
     echo "$1=\"$2\"" | sudo tee -a /etc/environment > /dev/null
   fi
 }
+
+username=$application
+dbName=$application
 
 # Update or append variables with their values
 update_env "linuxUser" "$linuxUser"
