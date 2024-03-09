@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTSTRING=":d:u:p:h:r:w:a:b:s:"
+OPTSTRING=":d:u:p:w:a:b:s:"
 
 while getopts ${OPTSTRING} opt; do
   case ${opt} in
@@ -12,13 +12,7 @@ while getopts ${OPTSTRING} opt; do
       ;;
     p)
       password=$OPTARG
-      ;;
-    h)
-      dbHost=$OPTARG
-      ;;
-    r)
-      replicaHost=$OPTARG
-      ;;
+      ;;    
     w)
       gitDir=$OPTARG
       ;;
@@ -39,6 +33,12 @@ while getopts ${OPTSTRING} opt; do
 done
 
 linuxUser=$SUDO_USER
+
+if [[ ${server} == 'prod1' || ${server} == 'prod2' ]]; then
+    dbHost="192.168.80.60"
+else
+    dbHost="192.168.80.50"
+fi
 
 # Check if /etc/environment file exists and create it if not
 if [ ! -f /etc/environment ]; then
@@ -62,11 +62,9 @@ update_env "branch" "$branch"
 update_env "dbName" "$dbName"
 update_env "username" "$username"
 update_env "password" "$password"
-update_env "replicaHost" "$replicaHost"
 update_env "dbHost" "$dbHost"
 update_env "server" "$server"
 
-mysql-bin.000001 |    85151
 ###scriplets to install application***
 bash $gitDir/scripts/pre_install.sh 
 bash $gitDir/scripts/install_deps.sh 

@@ -6,12 +6,6 @@ settingsDir="/var/www/web/sites/default"
 cd $settingsDir
 cp $gitDir/settings.php $settingsDir/
 
-if [[ ${server} == 'prod1' || ${server} == 'prod2' ]]; then
-    dbHost="192.168.80.60"
-else
-    dbHost="192.168.80.50"
-fi
-
 # Replace values in settings.php
 sed -i.bak -E "s/\@@@dbName/$dbName/g" settings.php
 sed -i.bak -E "s/\@@@username/$username/g" settings.php

@@ -18,4 +18,4 @@ jobs:
 
       - name: Run script
         run: |          
-          sudo ${{ github.workspace }}/scripts/install.sh -d ${{ secrets.DBNAME }} -u ${{ secrets.DBUSER }} -p ${{ secrets.DBPASSWORD }} -h ${{ secrets.DBIP }} -r ${{ secrets.REPLICAIP }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
+          sudo ${{ github.workspace }}/scripts/install.sh -d ${{ secrets.DBNAME }} -u ${{ secrets.DBUSER }} -p ${{ secrets.DBPASSWORD }} -h ${{ secrets.DBIP }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
