@@ -19,7 +19,7 @@ rm settings.php.bak
 cp -R $gitDir/themes/* /var/www/web/themes/contrib/
 
 #chowns the correct ownership
-chown -R $linuxUser:www-data /var/www
+sudo chown -R $linuxUser:www-data /var/www
 
 #updates using drush
 cd /var/www
