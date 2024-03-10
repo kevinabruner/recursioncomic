@@ -19,3 +19,4 @@ jobs:
       - name: Run script
         run: |          
           sudo ${{ github.workspace }}/scripts/install.sh -p ${{ secrets.DBPASSWORD }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
+          
