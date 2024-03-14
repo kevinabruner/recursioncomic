@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         runner: [ dev2 ]
-    needs: build-dev1      
+    needs: build-dev1       
     steps:
       - name: Checkout code
         uses: actions/checkout@v2      
