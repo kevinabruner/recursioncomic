@@ -2,20 +2,30 @@ name: Populate Variables
 
 on:
   push:
-    branches:      
+    branches:
       - dev
 
 jobs:
-  build-dev:    
+  build-dev1:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ dev2, dev1 ] # Replace with your runner names
-
+        runner: [ dev1 ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2      
+        uses: actions/checkout@v2
 
-      - name: Run script
+      - name: Run script on 1
+        run: |          
+          sudo ${{ github.workspace }}/scripts/install.sh -p ${{ secrets.DBPASSWORD }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
+
+  build-dev2:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ dev2 ]
+    needs: build-dev1
+    steps:
+      - name: Run script on 2
         run: |          
           sudo ${{ github.workspace }}/scripts/install.sh -p ${{ secrets.DBPASSWORD }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
