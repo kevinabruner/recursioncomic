@@ -29,9 +29,9 @@ done
 linuxUser=$SUDO_USER
 
 if [[ ${server} == 'prod1' || ${server} == 'prod2' ]]; then
-    dbHost="192.168.80.60"
+    dbHost="192.168.80.71"
 else
-    dbHost="192.168.80.50"
+    dbHost="192.168.80.71"
 fi
 
 # Check if /etc/environment file exists and create it if not
@@ -67,7 +67,6 @@ bash $gitDir/scripts/pre_install.sh
 bash $gitDir/scripts/install_deps.sh 
 bash $gitDir/scripts/mount_nfs.sh 
 bash $gitDir/scripts/composer_install.sh 
-bash $gitDir/scripts/populate_db.sh 
 bash $gitDir/scripts/configure_apache.sh
 bash $gitDir/scripts/configure_drupal.sh 
 bash $gitDir/scripts/post_install.sh 

@@ -14,9 +14,3 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get install -yq apache2 mysql-client php
 
 #enables and starts services
 sudo systemctl enable apache2.service
-
-##lets get some scripts to troubleshoot
-scriptsDir="/home/$linuxUser/recursion-git-copy/"
-rm -R $scriptsDir
-mkdir $scriptsDir
-cp ./ -R $scriptsDir
