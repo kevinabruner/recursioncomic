@@ -31,7 +31,7 @@ linuxUser=$SUDO_USER
 if [[ ${server} == 'prod1' || ${server} == 'prod2' ]]; then
     dbHost="192.168.80.51"
 else
-    dbHost="192.168.80.71"
+    dbHost="192.168.80.61"
 fi
 
 # Check if /etc/environment file exists and create it if not
