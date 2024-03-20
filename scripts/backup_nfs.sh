@@ -9,7 +9,7 @@ cephEntries=(
     /var/www/web/sites/default/files/
 )
 
-for entry in "${nfsEntries[@]}"; do
+for entry in "${cephEntries[@]}"; do
     sudo mkdir -p $backupDir/$HOSTNAME
     sudo rsync -avr --ignore-existing --delete $entry $backupDir/$HOSTNAME/$(basename $entry)    
     sudo chown -R $linuxUser:www-data $backupDir/$HOSTNAME/$(basename $entry)    
