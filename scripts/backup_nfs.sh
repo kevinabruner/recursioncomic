@@ -11,6 +11,6 @@ cephEntries=(
 
 for entry in "${nfsEntries[@]}"; do
     sudo mkdir -p $backupDir/$HOSTNAME
-    sudo cp -R $entry $backupDir/$HOSTNAME/$(basename $entry)    
+    sudo rsync -avr --ignore-existing --delete $entry $backupDir/$HOSTNAME/$(basename $entry)    
     sudo chown -R $linuxUser:www-data $backupDir/$HOSTNAME/$(basename $entry)    
 done    
