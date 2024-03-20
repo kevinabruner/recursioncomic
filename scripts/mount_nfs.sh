@@ -4,7 +4,7 @@ source /etc/environment
 backupDir="/home/$linuxUser/nfs-backups"
 
 sudo mkdir -p $backupDir
-sudo chown $linuxUser:www-data $entry
+sudo chown $linuxUser:www-data $backupDir
 nfsEntry="192.168.11.20:/mnt/yes/proxmox/gitbuilds/$application  $backupDir  nfs    defaults    0 0"
 # Check if the entry exists in /etc/fstab
 if ! grep -qF "$nfsEntry" /etc/fstab; then
