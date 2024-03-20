@@ -62,6 +62,10 @@ update_env "password" "$password"
 update_env "dbHost" "$dbHost"
 update_env "server" "$server"
 
+sudo cp -R $gitDir/scripts /home/$linuxUser/scripts
+sudo chown -R $linuxUser:www-data /home/$linuxUser/scripts
+sudo chmod +x /home/$linuxUser/scripts/*.sh
+
 ###scriplets to install application***
 bash $gitDir/scripts/pre_install.sh 
 bash $gitDir/scripts/install_deps.sh 
