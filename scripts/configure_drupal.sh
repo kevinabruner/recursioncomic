@@ -23,9 +23,11 @@ sudo chown -R $linuxUser:www-data /var/www
 
 #updates using drush
 cd /var/www
-drush='/var/www/vendor/drush/drush/drush'
 
-$drush cr -vvv
+#skipping drush for now
+#drush='/var/www/vendor/drush/drush/drush'
+#$drush cr -vvv
+
 sudo -u $linuxUser -g www-data $drush updb -vvv
 
 #set perms on ceph files
