@@ -28,6 +28,6 @@ $drush cr
 sudo -u $linuxUser -g www-data $drush updb
 
 #set perms on ceph files
-cephFiles="/var/www/web/sites/default/files"
+cephFiles="/home/$linuxUser/ceph-files"
 sudo chown -R $linuxUser:www-data $cephFiles
 sudo chmod 775 -R $linuxUser:www-data $cephFiles
