@@ -10,7 +10,7 @@ cephEntries=(
 )
 
 for entry in "${cephEntries[@]}"; do
-    sudo mkdir -p $backupDir/$HOSTNAME
+    sudo mkdir -p $backupDir/backup-files
     sudo rsync -avr --ignore-existing --delete $entry $backupDir/$HOSTNAME/$(basename $entry)    
     sudo chown -R $linuxUser:www-data $backupDir/$HOSTNAME/$(basename $entry)    
 done    
