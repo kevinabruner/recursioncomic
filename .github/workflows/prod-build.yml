@@ -19,13 +19,3 @@ jobs:
         run: |          
           sudo ${{ github.workspace }}/scripts/install.sh -p ${{ secrets.DBPASSWORD }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
 
-  build-prod2:
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      matrix:
-        runner: [ prod2 ]
-    needs: build-prod1
-    steps:
-      - name: Run script on 2
-        run: |          
-          sudo ${{ github.workspace }}/scripts/install.sh -p ${{ secrets.DBPASSWORD }} -w ${{ github.workspace }} -a ${GITHUB_REPOSITORY#*/} -b ${{ github.ref }} -s ${{ matrix.runner }} > /home/kevin/installLog.txt
