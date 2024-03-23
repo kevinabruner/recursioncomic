@@ -69,7 +69,7 @@ sudo chmod +x /home/$linuxUser/scripts/*.sh
 ###scriplets to install application***
 bash $gitDir/scripts/pre_install.sh 
 bash $gitDir/scripts/install_deps.sh 
-bash $gitDir/scripts/mount_nfs.sh 
+#bash $gitDir/scripts/mount_nfs.sh 
 bash $gitDir/scripts/composer_install.sh 
 bash $gitDir/scripts/configure_apache.sh
 bash $gitDir/scripts/configure_drupal.sh 
