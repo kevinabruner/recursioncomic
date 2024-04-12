@@ -1,0 +1,322 @@
+- name: Build 
+  hosts: nerdperk
+  vars_files:
+    - vars.yaml
+  tasks:                
+    - name: Install apt packages
+      apt:
+        #update_cache: yes
+        name: "{{ item }}"
+      loop:
+        - apache2
+        - mysql-client
+        - php
+        - php-gd
+        - php-pdo
+        - php-mysql
+        - php-dom
+        - php-curl
+        - ncdu
+        - gh
+        - composer
+        - vim
+        - nfs-common
+        - htop
+        - keepalived
+      become: true
+    
+    - name: Enable apache2 service
+      systemd:
+        name: apache2
+        enabled: yes
+      become: true
+
+    - name: Enable keepalived service
+      systemd:
+        name: keepalived
+        enabled: yes
+      become: true
+
+
+    - name: Ensure user kevin exists
+      user:
+        name: kevin
+        state: present
+
+    - name: Ensure group www-data exists
+      group:
+        name: www-data
+        state: present
+
+    - name: Add user kevin to group www-data
+      user:
+        name: kevin
+        groups: www-data
+        append: yes
+      become: yes
+
+    - name: Set ownership of /var/www recursively
+      file:
+        path: /var/www
+        owner: kevin
+        group: www-data
+        recurse: yes
+        state: directory
+        force: yes  # Ensure the ownership is always changed
+      become: yes               
+
+    - name: Add NFS share entry to /etc/fstab
+      lineinfile:
+        path: /etc/fstab
+        line: "{{ nfs_server }}:{{ nfs_share }}    {{ nfs_target_dir }}    nfs    defaults    0 0"
+        insertafter: EOF
+      become: true
+        
+
+    - name: Copy keepalived script template
+      copy:
+        src: "{{ git_dir }}/{{ keepalived_conf }}"
+        dest: "{{ keepalived_dir }}"
+      become: true          
+
+    - name: Extract last digit of IP address
+      set_fact:
+        last_digit: "{{ ansible_default_ipv4.address.split('.')[-1] | int }}"
+
+    - name: Master configuration
+      set_fact:
+        ROLE: "MASTER"
+        PRIORITY: 110
+      when: "(last_digit | int) % 2 != 0"
+
+    - name: Backup configuration
+      set_fact:
+        ROLE: "BACKUP"        
+        PRIORITY: 100
+      when: "(last_digit | int) % 2 == 0"    
+    
+    - name: Display roles for the host
+      debug:
+        var: group_names
+
+    - name: Setting internal/dev IP
+      set_fact:
+        VIRT_IP: "{{ internal_vip }}"  
+        ROUTER_ID: "{{ internal_router }}"      
+        DB_HOST: "{{ dev_db }}"  
+      when:         
+        - "'dev' in group_names"
+    
+    - name: Setting external/prod IP
+      set_fact:
+        VIRT_IP: "{{ external_vip }}"
+        ROUTER_ID: "{{ external_router }}"        
+        DB_HOST: "{{ prod_db }}"  
+      when:         
+        - "'prod' in group_names"                     
+
+    - name: remove uneeded prod IP from keepalived config
+      set_fact:
+        unassigned_ips: "{{ [prod1, prod2] | difference([ansible_default_ipv4.address]) }}"    
+      when:         
+        - "'prod' in group_names"    
+    
+    - name: remove uneeded dev IP from keepalived config
+      set_fact:
+        unassigned_ips: "{{ [dev1, dev2] | difference([ansible_default_ipv4.address]) }}"    
+      when:         
+        - "'dev' in group_names"    
+  
+    - name: Replace "@@@MASTER_OR_SLAVE" in file
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        backrefs: yes        
+        regexp: '^.*@@@MASTER_OR_SLAVE.*$'
+        line: "  state {{ ROLE }}"  
+      become: yes
+
+    - name: Replace "@@@ROUTER_ID" in file
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        backrefs: yes        
+        regexp: '^.*@@@ROUTER_ID.*$'
+        line: "  virtual_router_id {{ ROUTER_ID }}"  
+      become: yes 
+
+    - name: Replace "@@@VIRT_IP" in file
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        backrefs: yes
+        regexp: '^.*@@@VIRT_IP.*$'
+        line: "    {{ VIRT_IP }}/24"
+      become: yes
+
+    - name: Replace "@@@PRIORITY" in file
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        backrefs: yes
+        regexp: '^.*@@@PRIORITY.*$'
+        line: "  priority {{ PRIORITY }}"
+      become: yes
+
+    - name: Replace @@@PEERS with unassigned IPs
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        regexp: '^.*@@@PEERS.*$'
+        line: "    {{ item }}"
+        backrefs: yes
+      loop: "{{ unassigned_ips }}"
+      become: yes
+
+
+    - name: Replace "@@@INTERFACE" in file
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        backrefs: yes
+        regexp: '^.*@@@INTERFACE.*$'
+        line: "  interface {{ INTERFACE }}"
+      become: yes
+
+    - name: Replace "@@@SRC_IP" in file
+      lineinfile:
+        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
+        backrefs: yes        
+        regexp: '^.*@@@SRC_IP.*$'
+        line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
+      become: yes
+
+
+    - name: Copy keepalived script template
+      copy:
+        src: "{{ git_dir }}/composer.json"
+        dest: "/var/www/"           
+
+
+
+    - name: install composer deps using composer.json
+      community.general.composer:
+        command: install
+        working_dir: /var/www
+      become_user: kevin:www-data
+
+    - name: Update DocumentRoot in Apache configuration
+      become: true
+      lineinfile:
+        path: /etc/apache2/sites-enabled/000-default.conf
+        regexp: '^(\s*)DocumentRoot /var/www/html'
+        line: 'DocumentRoot /var/www/web/'
+        backup: yes
+
+
+
+    - name: Replace block of text
+      ansible.builtin.replace:
+        path: /etc/apache2/apache2.conf
+        regexp: "(<Directory /var/www/>)\\n(\\s+Options Indexes FollowSymLinks\\n\\s+AllowOverride) None(\\n\\s+Require all granted\\n</Directory>)"
+        replace: "\\1\\n\\2 All\\3"
+        backup: yes
+      become: true
+
+
+
+    - name: Enable Apache rewrite module
+      become: true
+      command: a2enmod rewrite
+
+
+    - name: Copy settings file
+      copy:
+        src: "{{ git_dir }}/settings.php"
+        dest: "/var/www/web/sites/default/"    
+
+    - name: Replace dbName placeholder with actual value in settings.php
+      become: true
+      replace:
+        path: /var/www/web/sites/default/settings.php
+        regexp: "@@@dbName"
+        replace: "{{ dbName }}"
+
+    - name: Replace username placeholder with actual value in settings.php
+      become: true
+      replace:
+        path: /var/www/web/sites/default/settings.php
+        regexp: "@@@username"
+        replace: "{{ username }}"
+
+    - name: Replace password placeholder with actual value in settings.php
+      become: true
+      replace:
+        path: /var/www/web/sites/default/settings.php
+        regexp: "@@@password"
+        replace: "{{ db_password }}"
+
+    - name: Replace dbHost placeholder with actual value in settings.php
+      become: true
+      replace:
+        path: /var/www/web/sites/default/settings.php
+        regexp: "@@@dbHost"
+        replace: "{{ DB_HOST }}"
+            
+
+    - name: Copy theme(s)
+      copy:
+        src: "{{ git_dir }}/themes/"
+        dest: "/var/www/web/themes/contrib/"    
+
+    
+    - name: Restart apache
+      service:
+        name: apache2
+        state: restarted
+      become: yes    
+
+    - name: Restart keepalived
+      service:
+        name: keepalived
+        state: restarted
+      become: yes
+
+    - name: Create NFS mount point 
+      file:
+        path: /var/www/web/sites/default/files
+        state: directory
+      become: true
+
+    - name: Run sudo mount -a
+      become: true
+      command: mount -a
+
+    # - name: Run drush cache refresh
+    #   become: true
+    #   command: "{{ drush }} cr"
+    #   args:
+    #     chdir: "/var/www"
+    #   become_user: kevin:www-data
+
+    # - name: Run drush update db
+    #   become: true
+    #   command: "{{ drush }} updb"
+    #   args:
+    #     chdir: "/var/www"
+    #   become_user: kevin:www-data
+
+    - name: Change ownership recursively
+      become: true
+      file:
+        path: "{{ nfs_target_dir }}"
+        owner: "{{ ANSIBLE_USER }}"
+        group: "www-data"
+        recurse: yes
+
+    - name: Change permissions recursively
+      become: true
+      file:
+        path: "{{ nfs_target_dir }}"
+        mode: "0775"
+        recurse: yes
+
+
+
+
+    
+    
