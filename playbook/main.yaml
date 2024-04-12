@@ -186,13 +186,12 @@
         line: "  priority {{ PRIORITY }}"
       become: yes
 
-    - name: Replace @@@PEERS with unassigned IPs
+    - name: Replace @@@PEERS with unassigned IP
       lineinfile:
         path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
         regexp: '^.*@@@PEERS.*$'
-        line: "    {{ item }}"
+        line: "    {{ peer_ip }}"
         backrefs: yes
-      loop: "{{ peer_ip }}"
       become: yes
 
 
