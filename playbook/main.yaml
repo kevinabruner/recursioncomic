@@ -116,20 +116,22 @@
         - "'prod' in group_names"                     
 
 
+
     - name: Set peer_ip based on host IP address
       set_fact:
         peer_ip: >-
           {{
             {
-              'dev1': 'dev2',
-              'dev2': 'dev1',
-              'prod1': 'prod2',
-              'prod2': 'prod1'
-            }[ansible_default_ipv4.address]
+              'recursioncomic-dev1': 'recursioncomic-dev2',
+              'recursioncomic-dev2': 'recursioncomic-dev1',
+              'recursioncomic-prod1': 'recursioncomic-prod2',
+              'recursioncomic-prod2': 'recursioncomic-prod1'
+            }[inventory_hostname]
           }}
 
     - debug:
         var: peer_ip
+
          
       when:         
         - "'prod' in group_names"    
