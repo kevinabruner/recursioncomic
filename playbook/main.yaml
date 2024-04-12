@@ -87,8 +87,7 @@
       set_fact:
         ROLE: "MASTER"
         PRIORITY: 110
-      when: "(last_digit | int) % 2 != 0"
-      - "'prod' in group_names"    
+      when: "(last_digit | int) % 2 != 0"    
 
     - name: Backup configuration
       set_fact:
