@@ -205,13 +205,10 @@
         line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
       become: yes
 
-
     - name: Copy keepalived script template
       copy:
         src: "{{ git_dir }}/composer.json"
         dest: "/var/www/"           
-
-
 
     - name: install composer deps using composer.json
       community.general.composer:
@@ -327,9 +324,3 @@
         path: "{{ nfs_target_dir }}"
         mode: "0775"
         recurse: yes
-
-
-
-
-    
-    
