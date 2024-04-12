@@ -5,7 +5,7 @@
   tasks:                
     - name: Install apt packages
       apt:
-        #update_cache: yes
+        update_cache: yes
         name: "{{ item }}"
       loop:
         - apache2
@@ -36,7 +36,6 @@
         name: keepalived
         enabled: yes
       become: true
-
 
     - name: Ensure user kevin exists
       user:
@@ -72,7 +71,6 @@
         insertafter: EOF
       become: true
         
-
     - name: Copy keepalived script template
       copy:
         src: "{{ git_dir }}/{{ keepalived_conf }}"
@@ -123,7 +121,6 @@
       when:         
         - "'prod' in group_names"                  
 
-
     - name: Setting peer IP for odd last digit in 'prod' group
       set_fact:
         peer_ip: "{{ prod2 }}"
@@ -152,8 +149,6 @@
         - (last_digit | int) % 2 == 0
         - "'dev' in group_names"
 
-    
-  
     - name: Replace "@@@MASTER_OR_SLAVE" in file
       lineinfile:
         path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
@@ -194,7 +189,6 @@
         backrefs: yes
       become: yes
 
-
     - name: Replace "@@@INTERFACE" in file
       lineinfile:
         path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
@@ -233,8 +227,6 @@
         line: 'DocumentRoot /var/www/web/'
         backup: yes
 
-
-
     - name: Replace block of text
       ansible.builtin.replace:
         path: /etc/apache2/apache2.conf
@@ -243,12 +235,9 @@
         backup: yes
       become: true
 
-
-
     - name: Enable Apache rewrite module
       become: true
       command: a2enmod rewrite
-
 
     - name: Copy settings file
       copy:
@@ -283,13 +272,11 @@
         regexp: "@@@dbHost"
         replace: "{{ DB_HOST }}"
             
-
     - name: Copy theme(s)
       copy:
         src: "{{ git_dir }}/themes/"
         dest: "/var/www/web/themes/contrib/"    
 
-    
     - name: Restart apache
       service:
         name: apache2
