@@ -129,29 +129,29 @@
       set_fact:
          peer_ip: "{{ prod2 }}"
       when: 
-      - (last_digit | int) % 2 != 0
-      - "'prod' in group_names"  
+        - (last_digit | int) % 2 != 0
+        - "'prod' in group_names"  
 
     - name: Setting peer IP
       set_fact:
          peer_ip: "{{ prod1 }}"
       when: 
-      - (last_digit | int) % 2 == 0"    
-      - "'prod' in group_names"  
+        - (last_digit | int) % 2 == 0"    
+        - "'prod' in group_names"  
 
     - name: Setting peer IP
       set_fact:
          peer_ip: "{{ dev2 }}"
       when: 
-      - (last_digit | int) % 2 != 0
-      - "'dev' in group_names"  
+        - (last_digit | int) % 2 != 0
+        - "'dev' in group_names"  
 
     - name: Setting peer IP
       set_fact:
          peer_ip: "{{ dev1 }}"
       when: 
-      - (last_digit | int) % 2 == 0"    
-      - "'dev' in group_names"  
+        - (last_digit | int) % 2 == 0"    
+        - "'dev' in group_names"  
     
     - name: remove uneeded dev IP from keepalived config
       set_fact:
