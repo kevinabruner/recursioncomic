@@ -88,6 +88,7 @@
         ROLE: "MASTER"
         PRIORITY: 110
       when: "(last_digit | int) % 2 != 0"
+      - "'prod' in group_names"    
 
     - name: Backup configuration
       set_fact:
@@ -113,28 +114,44 @@
         ROUTER_ID: "{{ external_router }}"        
         DB_HOST: "{{ prod_db }}"  
       when:         
-        - "'prod' in group_names"                     
+        - "'prod' in group_names"      
 
-
-
-    - name: Set peer_ip based on host IP address
+    - name: Setting external/prod IP
       set_fact:
-        peer_ip: >-
-          {{
-            {
-              'recursioncomic-dev1': 'recursioncomic-dev2',
-              'recursioncomic-dev2': 'recursioncomic-dev1',
-              'recursioncomic-prod1': 'recursioncomic-prod2',
-              'recursioncomic-prod2': 'recursioncomic-prod1'
-            }[inventory_hostname]
-          }}
-
-    - debug:
-        var: peer_ip
-
-         
+        VIRT_IP: "{{ external_vip }}"
+        ROUTER_ID: "{{ external_router }}"        
+        DB_HOST: "{{ prod_db }}"  
       when:         
-        - "'prod' in group_names"    
+        - "'prod' in group_names"                  
+
+
+    - name: Setting peer IP
+      set_fact:
+         peer_ip: "{{ prod2 }}"
+      when: 
+      - (last_digit | int) % 2 != 0
+      - "'prod' in group_names"  
+
+    - name: Setting peer IP
+      set_fact:
+         peer_ip: "{{ prod1 }}"
+      when: 
+      - (last_digit | int) % 2 == 0"    
+      - "'prod' in group_names"  
+
+    - name: Setting peer IP
+      set_fact:
+         peer_ip: "{{ dev2 }}"
+      when: 
+      - (last_digit | int) % 2 != 0
+      - "'dev' in group_names"  
+
+    - name: Setting peer IP
+      set_fact:
+         peer_ip: "{{ dev1 }}"
+      when: 
+      - (last_digit | int) % 2 == 0"    
+      - "'dev' in group_names"  
     
     - name: remove uneeded dev IP from keepalived config
       set_fact:
