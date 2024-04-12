@@ -125,39 +125,35 @@
         - "'prod' in group_names"                  
 
 
-    - name: Setting peer IP
+    - name: Setting peer IP for odd last digit in 'prod' group
       set_fact:
-         peer_ip: "{{ prod2 }}"
+        peer_ip: "{{ prod2 }}"
       when: 
         - (last_digit | int) % 2 != 0
-        - "'prod' in group_names"  
+        - "'prod' in group_names"
 
-    - name: Setting peer IP
+    - name: Setting peer IP for even last digit in 'prod' group
       set_fact:
-         peer_ip: "{{ prod1 }}"
+        peer_ip: "{{ prod1 }}"
       when: 
-        - (last_digit | int) % 2 == 0"    
-        - "'prod' in group_names"  
+        - (last_digit | int) % 2 == 0
+        - "'prod' in group_names"
 
-    - name: Setting peer IP
+    - name: Setting peer IP for odd last digit in 'dev' group
       set_fact:
-         peer_ip: "{{ dev2 }}"
+        peer_ip: "{{ dev2 }}"
       when: 
         - (last_digit | int) % 2 != 0
-        - "'dev' in group_names"  
+        - "'dev' in group_names"
 
-    - name: Setting peer IP
+    - name: Setting peer IP for even last digit in 'dev' group
       set_fact:
-         peer_ip: "{{ dev1 }}"
+        peer_ip: "{{ dev1 }}"
       when: 
-        - (last_digit | int) % 2 == 0"    
-        - "'dev' in group_names"  
+        - (last_digit | int) % 2 == 0
+        - "'dev' in group_names"
+
     
-    - name: remove uneeded dev IP from keepalived config
-      set_fact:
-        
-      when:         
-        - "'dev' in group_names"    
   
     - name: Replace "@@@MASTER_OR_SLAVE" in file
       lineinfile:
