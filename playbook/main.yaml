@@ -1,5 +1,6 @@
 - name: Build 
   hosts: recursioncomic
+  serial: 1
   vars_files:
     - vars.yaml
   tasks:                
