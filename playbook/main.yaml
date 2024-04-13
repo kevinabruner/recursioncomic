@@ -77,18 +77,6 @@
         dest: "{{ keepalived_dir }}"
       become: true          
 
-    - name: Setting master variables
-      set_fact:
-        ROLE: "MASTER"
-        PRIORITY: 110
-      when: "last_digit % 2 != 0"
-
-    - name: Setting backup variables
-      set_fact:
-        ROLE: "BACKUP"
-        PRIORITY: 100
-      when: "last_digit % 2 == 0"
-
     - name: Extract last digit of IP address
       set_fact:
         last_digit: "{{ ansible_default_ipv4.address.split('.')[-1] | int }}"
