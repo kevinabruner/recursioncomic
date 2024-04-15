@@ -7,7 +7,7 @@ keepalived_conf: "keepalived.conf"
 keepalived_dir: "/etc/keepalived/"
 INTERFACE: eth0   
 internal_router: 191
-dev_db: 192.168.80.51
+dev_db: 192.168.80.50
 dev1: 192.168.80.15
 dev2: 192.168.80.16
 internal_vip: 192.168.80.17
