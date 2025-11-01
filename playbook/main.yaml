@@ -29,6 +29,12 @@
     - name: unmount nfs
       become: true
       command: umount -a -t nfs
+
+    - name: Remove web directory if it exists
+      ansible.builtin.file:
+        path: "/var/www/web/"
+        state: absent
+      run_once: true
     
     - name: Enable apache2 service
       systemd:
