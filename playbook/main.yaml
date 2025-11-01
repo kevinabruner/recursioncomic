@@ -16,6 +16,7 @@
         - php-pdo
         - php-mysql
         - php-dom
+        - php-mbstring
         - php-curl
         - ncdu
         - gh
@@ -341,7 +342,7 @@
 
     - name: Run drush update db
       become: true
-      command: "{{ drush }} updb"
+      command: "{{ drush }} updb -y"
       args:
         chdir: "/var/www"
 
