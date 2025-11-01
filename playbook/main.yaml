@@ -19,7 +19,6 @@
         - php-curl
         - ncdu
         - gh
-        - composer
         - vim
         - nfs-common
         - htop
@@ -206,16 +205,29 @@
         line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
       become: yes
 
-    - name: Copy keepalived script template
-      copy:
-        src: "{{ git_dir }}/composer.json"
-        dest: "/var/www/"           
-
-    - name: install composer deps using composer.json
+    - name: Install composer dependencies locally
+      delegate_to: localhost
       community.general.composer:
         command: install
-        working_dir: /var/www
-      become_user: kevin:www-data
+        working_dir: ./build/  
+      run_once: true   
+
+    # Sync files to target host
+    - name: Sync application to server
+      ansible.posix.synchronize:
+        src: ./build/
+        dest: /var/www/
+        delete: yes
+      become: true
+      become_user: kevin
+
+    - name: Set ownership to www-data on target
+      ansible.builtin.file:
+        path: /var/www/
+        owner: www-data
+        group: www-data
+        recurse: yes
+      become: true
 
     - name: Update DocumentRoot in Apache configuration
       become: true
