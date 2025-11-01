@@ -235,14 +235,6 @@
         delete: yes
       become: true
 
-    - name: Set ownership to www-data on target
-      ansible.builtin.file:
-        path: /var/www/
-        owner: www-data
-        group: www-data
-        recurse: yes
-      become: true
-
     - name: Update DocumentRoot in Apache configuration
       become: true
       lineinfile:
@@ -300,7 +292,15 @@
     - name: Copy theme(s)
       copy:
         src: "{{ git_dir }}/themes/"
-        dest: "/var/www/web/themes/contrib/"    
+        dest: "/var/www/web/themes/contrib/" 
+
+    - name: Set ownership to www-data on target
+      ansible.builtin.file:
+        path: /var/www/
+        owner: www-data
+        group: www-data
+        recurse: yes
+      become: true   
 
     - name: Restart apache
       service:
