@@ -111,14 +111,6 @@
         ROUTER_ID: "{{ external_router }}"        
         DB_HOST: "{{ prod_db }}"  
       when:         
-        - "'prod' in group_names"      
-
-    - name: Setting external/prod IP
-      set_fact:
-        VIRT_IP: "{{ external_vip }}"
-        ROUTER_ID: "{{ external_router }}"        
-        DB_HOST: "{{ prod_db }}"  
-      when:         
         - "'prod' in group_names"                  
 
     - name: Setting peer IP for odd last digit in 'prod' group
