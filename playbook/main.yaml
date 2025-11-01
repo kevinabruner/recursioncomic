@@ -261,9 +261,10 @@
       command: a2enmod rewrite
 
     - name: Copy settings file
+      become: true
       copy:
         src: "{{ git_dir }}/settings.php"
-        dest: "/var/www/web/sites/default/"    
+        dest: "/var/www/web/sites/default/" 
 
     - name: Replace dbName placeholder with actual value in settings.php
       become: true
