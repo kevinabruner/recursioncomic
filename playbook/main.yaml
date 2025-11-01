@@ -197,18 +197,27 @@
         line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
       become: yes
 
+    - name: Remove local build directory if it exists
+      delegate_to: localhost
+      ansible.builtin.file:
+        path: ./.build
+        state: absent
+      run_once: true
+
     - name: Ensure .build directory exists locally
       delegate_to: localhost
       ansible.builtin.file:
         path: "{{ git_dir }}/.build"
         state: directory
         mode: "0755"
+      run_once: true
 
     - name: Copy composer file
       delegate_to: localhost
       copy:
         src: "{{ git_dir }}/composer.json"
         dest: "{{ git_dir }}/.build/composer.json" 
+      run_once: true
 
     - name: Install composer dependencies locally
       delegate_to: localhost
