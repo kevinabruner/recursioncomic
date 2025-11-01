@@ -25,6 +25,10 @@
         - htop
         - keepalived
       become: true
+
+    - name: unmount nfs
+      become: true
+      command: umount -a -t nfs
     
     - name: Enable apache2 service
       systemd:
@@ -330,7 +334,7 @@
         state: directory
       become: true
 
-    - name: Run sudo mount -a
+    - name: Run sudo mount -a -t nfs
       become: true
       command: mount -a
 
