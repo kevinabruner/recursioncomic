@@ -31,6 +31,7 @@
       command: umount -a -t nfs
 
     - name: Remove web directory if it exists
+      become: true
       ansible.builtin.file:
         path: "/var/www/web/"
         state: absent
