@@ -324,19 +324,19 @@
       become: true
       command: mount -a
 
-    # - name: Run drush cache refresh
-    #   become: true
-    #   command: "{{ drush }} cr"
-    #   args:
-    #     chdir: "/var/www"
-    #   become_user: kevin:www-data
+    - name: Run drush cache refresh
+      become: true
+      command: "{{ drush }} cr"
+      args:
+        chdir: "/var/www"
+      become_user: kevin:www-data
 
-    # - name: Run drush update db
-    #   become: true
-    #   command: "{{ drush }} updb"
-    #   args:
-    #     chdir: "/var/www"
-    #   become_user: kevin:www-data
+    - name: Run drush update db
+      become: true
+      command: "{{ drush }} updb"
+      args:
+        chdir: "/var/www"
+      become_user: kevin:www-data
 
     - name: Change ownership recursively
       become: true
