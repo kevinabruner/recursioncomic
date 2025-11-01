@@ -226,10 +226,17 @@
       run_once: true   
 
     # Sync files to target host
-    - name: Sync application to server
+    - name: Sync "web" to server
       ansible.posix.synchronize:
-        src: "{{ git_dir }}/.build"
-        dest: /var/www/
+        src: "{{ git_dir }}/.build/web"
+        dest: /var/www/web
+        delete: yes
+      become: true
+
+    - name: Sync "vendor" to server
+      ansible.posix.synchronize:
+        src: "{{ git_dir }}/.build/vendor"
+        dest: /var/www/vendor
         delete: yes
       become: true
 
