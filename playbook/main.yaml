@@ -232,6 +232,7 @@
     - name: unmount nfs
       become: true
       command: umount -t nfs /var/www/web/sites/default/files
+      ignore_errors: yes
 
     - name: Remove web directory if it exists
       become: true
