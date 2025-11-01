@@ -49,6 +49,18 @@
         enabled: yes
       become: true
 
+    - name: Stop apache
+      service:
+        name: apache2
+        state: stopped
+      become: yes    
+
+    - name: Stop keepalived
+      service:
+        name: keepalived
+        state: stopped
+      become: yes
+
     - name: Ensure user kevin exists
       user:
         name: kevin
@@ -323,16 +335,16 @@
         recurse: yes
       become: true   
 
-    - name: Restart apache
+    - name: Start apache
       service:
         name: apache2
-        state: restarted
+        state: started
       become: yes    
 
-    - name: Restart keepalived
+    - name: Start keepalived
       service:
         name: keepalived
-        state: restarted
+        state: started
       become: yes
 
     - name: Create NFS mount point 
