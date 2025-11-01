@@ -25,17 +25,6 @@
         - htop
         - keepalived
       become: true
-
-    - name: unmount nfs
-      become: true
-      command: umount -t nfs /var/www/web/sites/default/files
-
-    - name: Remove web directory if it exists
-      become: true
-      ansible.builtin.file:
-        path: "/var/www/web/"
-        state: absent
-      run_once: true
     
     - name: Enable apache2 service
       systemd:
@@ -77,16 +66,6 @@
         groups: www-data
         append: yes
       become: yes
-
-    - name: Set ownership of /var/www recursively
-      file:
-        path: /var/www
-        owner: kevin
-        group: www-data
-        recurse: yes
-        state: directory
-        force: yes  # Ensure the ownership is always changed
-      become: yes               
 
     - name: Add NFS share entry to /etc/fstab
       lineinfile:
@@ -249,8 +228,18 @@
         command: install
         working_dir: "{{ git_dir }}/.build"
       run_once: true   
+    
+    - name: unmount nfs
+      become: true
+      command: umount -t nfs /var/www/web/sites/default/files
 
-    # Sync files to target host
+    - name: Remove web directory if it exists
+      become: true
+      ansible.builtin.file:
+        path: "/var/www/web/"
+        state: absent
+      run_once: true
+
     - name: Sync "web" to server
       ansible.posix.synchronize:
         src: "{{ git_dir }}/.build/web"
