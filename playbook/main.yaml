@@ -212,6 +212,12 @@
         state: directory
         mode: "0755"
 
+    - name: Copy composer file
+      delegate_to: localhost
+      copy:
+        src: "{{ git_dir }}/composer.json"
+        dest: "{{ git_dir }}/.build" 
+
     - name: Install composer dependencies locally
       delegate_to: localhost
       community.general.composer:
