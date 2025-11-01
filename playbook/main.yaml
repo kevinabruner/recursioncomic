@@ -231,7 +231,7 @@
         dest: "{{ git_dir }}/.build/composer.json" 
       run_once: true
 
-    - name: Install composer dependencies locally
+    - name: run composer project locally
       delegate_to: localhost
       community.general.composer:
         command: install
