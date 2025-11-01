@@ -216,7 +216,7 @@
       delegate_to: localhost
       copy:
         src: "{{ git_dir }}/composer.json"
-        dest: "{{ git_dir }}/.build" 
+        dest: "{{ git_dir }}/.build/composer.json" 
 
     - name: Install composer dependencies locally
       delegate_to: localhost
