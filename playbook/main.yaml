@@ -229,14 +229,14 @@
     - name: Sync "web" to server
       ansible.posix.synchronize:
         src: "{{ git_dir }}/.build/web"
-        dest: /var/www/web
+        dest: /var/www/
         delete: yes
       become: true
 
     - name: Sync "vendor" to server
       ansible.posix.synchronize:
         src: "{{ git_dir }}/.build/vendor"
-        dest: /var/www/vendor
+        dest: /var/www/
         delete: yes
       become: true
 
