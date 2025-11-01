@@ -1,6 +1,0 @@
-recursioncomic:
-  hosts:
-    recursioncomic-dev1:
-      ansible host: 192.168.80.15
-    recursioncomic-dev2:
-      ansible host: 192.168.80.16
