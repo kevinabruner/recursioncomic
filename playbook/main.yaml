@@ -208,7 +208,7 @@
     - name: Ensure .build directory exists locally
       delegate_to: localhost
       ansible.builtin.file:
-        path: ./.build
+        path: "{{ git_dir }}/.build"
         state: directory
         mode: "0755"
 
