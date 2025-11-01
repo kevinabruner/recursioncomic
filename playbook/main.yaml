@@ -16,10 +16,10 @@
         - php-pdo
         - php-mysql
         - php-dom
+        - php-mbstring
         - php-curl
         - ncdu
         - gh
-        - composer
         - vim
         - nfs-common
         - htop
@@ -38,6 +38,18 @@
         enabled: yes
       become: true
 
+    - name: Stop apache
+      service:
+        name: apache2
+        state: stopped
+      become: yes    
+
+    - name: Stop keepalived
+      service:
+        name: keepalived
+        state: stopped
+      become: yes
+
     - name: Ensure user kevin exists
       user:
         name: kevin
@@ -54,16 +66,6 @@
         groups: www-data
         append: yes
       become: yes
-
-    - name: Set ownership of /var/www recursively
-      file:
-        path: /var/www
-        owner: kevin
-        group: www-data
-        recurse: yes
-        state: directory
-        force: yes  # Ensure the ownership is always changed
-      become: yes               
 
     - name: Add NFS share entry to /etc/fstab
       lineinfile:
@@ -106,14 +108,6 @@
       when:         
         - "'dev' in group_names"
     
-    - name: Setting external/prod IP
-      set_fact:
-        VIRT_IP: "{{ external_vip }}"
-        ROUTER_ID: "{{ external_router }}"        
-        DB_HOST: "{{ prod_db }}"  
-      when:         
-        - "'prod' in group_names"      
-
     - name: Setting external/prod IP
       set_fact:
         VIRT_IP: "{{ external_vip }}"
@@ -206,16 +200,63 @@
         line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
       become: yes
 
-    - name: Copy keepalived script template
+    - name: Remove local build directory if it exists
+      delegate_to: localhost
+      ansible.builtin.file:
+        path: "{{ git_dir }}/.build"
+        state: absent
+      run_once: true
+
+    - name: Ensure .build directory exists locally
+      delegate_to: localhost
+      ansible.builtin.file:
+        path: "{{ git_dir }}/.build"
+        state: directory
+        mode: "0755"
+      run_once: true
+
+    - name: Copy composer file
+      delegate_to: localhost
       copy:
         src: "{{ git_dir }}/composer.json"
-        dest: "/var/www/"           
+        dest: "{{ git_dir }}/.build/composer.json" 
+      run_once: true
 
-    - name: install composer deps using composer.json
+    - name: run composer project locally
+      delegate_to: localhost
       community.general.composer:
         command: install
-        working_dir: /var/www
-      become_user: kevin:www-data
+        working_dir: "{{ git_dir }}/.build"
+      run_once: true   
+    
+    - name: unmount nfs
+      become: true
+      command: umount -t nfs /var/www/web/sites/default/files
+      ignore_errors: yes
+
+    - name: Remove web directory if it exists
+      become: true
+      ansible.builtin.file:
+        path: "/var/www/web/"
+        state: absent
+      run_once: true
+
+    - name: Sync "web" to server
+      ansible.posix.synchronize:
+        src: "{{ git_dir }}/.build/web"
+        dest: /var/www/
+        rsync_opts:
+          - "--delete-after"
+          - "--exclude=sites/default/files"
+          - "--exclude=sites/default/settings.php"
+      become: true
+
+    - name: Sync "vendor" to server
+      ansible.posix.synchronize:
+        src: "{{ git_dir }}/.build/vendor"
+        dest: /var/www/
+        delete: yes
+      become: true
 
     - name: Update DocumentRoot in Apache configuration
       become: true
@@ -238,9 +279,10 @@
       command: a2enmod rewrite
 
     - name: Copy settings file
+      become: true
       copy:
         src: "{{ git_dir }}/settings.php"
-        dest: "/var/www/web/sites/default/"    
+        dest: "/var/www/web/sites/default/" 
 
     - name: Replace dbName placeholder with actual value in settings.php
       become: true
@@ -273,18 +315,26 @@
     - name: Copy theme(s)
       copy:
         src: "{{ git_dir }}/themes/"
-        dest: "/var/www/web/themes/contrib/"    
+        dest: "/var/www/web/themes/contrib/" 
 
-    - name: Restart apache
+    - name: Set ownership to www-data on target
+      ansible.builtin.file:
+        path: /var/www/
+        owner: www-data
+        group: www-data
+        recurse: yes
+      become: true   
+
+    - name: Start apache
       service:
         name: apache2
-        state: restarted
+        state: started
       become: yes    
 
-    - name: Restart keepalived
+    - name: Start keepalived
       service:
         name: keepalived
-        state: restarted
+        state: started
       become: yes
 
     - name: Create NFS mount point 
@@ -293,23 +343,24 @@
         state: directory
       become: true
 
-    - name: Run sudo mount -a
+    - name: Run sudo mount -a -t nfs
       become: true
       command: mount -a
 
-    # - name: Run drush cache refresh
-    #   become: true
-    #   command: "{{ drush }} cr"
-    #   args:
-    #     chdir: "/var/www"
-    #   become_user: kevin:www-data
+    - name: Run drush cache refresh
+      become: true
+      command: "{{ drush }} cr"
+      args:
+        chdir: "/var/www"
+      run_once: true
+      
 
-    # - name: Run drush update db
-    #   become: true
-    #   command: "{{ drush }} updb"
-    #   args:
-    #     chdir: "/var/www"
-    #   become_user: kevin:www-data
+    - name: Run drush update db
+      become: true
+      command: "{{ drush }} updb -y"
+      args:
+        chdir: "/var/www"
+      run_once: true
 
     - name: Change ownership recursively
       become: true
