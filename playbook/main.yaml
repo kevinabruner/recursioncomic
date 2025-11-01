@@ -200,7 +200,7 @@
     - name: Remove local build directory if it exists
       delegate_to: localhost
       ansible.builtin.file:
-        path: ./.build
+        path: "{{ git_dir }}/.build"
         state: absent
       run_once: true
 
