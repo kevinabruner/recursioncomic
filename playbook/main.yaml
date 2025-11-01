@@ -222,7 +222,10 @@
       ansible.posix.synchronize:
         src: "{{ git_dir }}/.build/web"
         dest: /var/www/
-        delete: yes
+        rsync_opts:
+          - "--delete-after"
+          - "--exclude=sites/default/files"
+          - "--exclude=sites/default/settings.php"
       become: true
 
     - name: Sync "vendor" to server
