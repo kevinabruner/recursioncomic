@@ -205,17 +205,24 @@
         line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
       become: yes
 
+    - name: Ensure .build directory exists locally
+      delegate_to: localhost
+      ansible.builtin.file:
+        path: ./.build
+        state: directory
+        mode: "0755"
+
     - name: Install composer dependencies locally
       delegate_to: localhost
       community.general.composer:
         command: install
-        working_dir: ./build/  
+        working_dir: ./.build/  
       run_once: true   
 
     # Sync files to target host
     - name: Sync application to server
       ansible.posix.synchronize:
-        src: ./build/
+        src: ./.build/
         dest: /var/www/
         delete: yes
       become: true
