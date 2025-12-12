@@ -24,6 +24,18 @@
         - nfs-common
         - htop
       become: true
+
+    - name: Setting internal/dev IP
+      set_fact:
+        DB_HOST: "{{ dev_db }}"  
+      when:         
+        - "'dev' in group_names"
+    
+    - name: Setting external/prod IP
+      set_fact:
+        DB_HOST: "{{ prod_db }}"  
+      when:         
+        - "'prod' in group_names"  
     
     - name: Enable apache2 service
       systemd:
