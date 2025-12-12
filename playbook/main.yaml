@@ -114,6 +114,12 @@
         state: absent
       run_once: true
 
+    - name: Create config sync
+      file:
+        path: /var/www/sync
+        state: directory
+      become: true
+
     - name: Sync "web" to server
       ansible.posix.synchronize:
         src: "{{ git_dir }}/.build/web"
@@ -215,7 +221,6 @@
         # chdir: "/var/www"
         #run_once: true
       
-
     # - name: Run drush update db
     #   become: true
     #   command: "{{ drush }} updb -y"
