@@ -347,12 +347,12 @@
       become: true
       command: mount -a
 
-    - name: Run drush cache refresh
-      become: true
-      command: "{{ drush }} cr"
-      args:
-        chdir: "/var/www"
-      run_once: true
+        #- name: Run drush cache refresh
+        #become: true
+        #command: "{{ drush }} cr"
+        #args:
+        # chdir: "/var/www"
+        #run_once: true
       
 
     - name: Run drush update db
