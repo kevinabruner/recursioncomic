@@ -139,7 +139,7 @@
         line: 'DocumentRoot /var/www/web/'
         backup: yes
 
-    - name: Replace block of text
+    - name: Replace Apache options for symlinks
       ansible.builtin.replace:
         path: /etc/apache2/apache2.conf
         regexp: "(<Directory /var/www/>)\\n(\\s+Options Indexes FollowSymLinks\\n\\s+AllowOverride) None(\\n\\s+Require all granted\\n</Directory>)"
@@ -190,19 +190,13 @@
         src: "{{ git_dir }}/themes/"
         dest: "/var/www/web/themes/contrib/" 
 
-    - name: Set ownership to www-data on target
+    - name: Set ownership to www-data on target web dir
       ansible.builtin.file:
         path: /var/www/
         owner: www-data
         group: www-data
         recurse: yes
-      become: true   
-
-    - name: Start apache
-      service:
-        name: apache2
-        state: started
-      become: yes    
+      become: true       
 
     - name: Create NFS mount point 
       file:
@@ -210,7 +204,7 @@
         state: directory
       become: true
 
-    - name: Run sudo mount -a -t nfs
+    - name: Mount all NFS shares
       become: true
       command: mount -a
 
@@ -229,7 +223,7 @@
     #     chdir: "/var/www"
     #   run_once: true
 
-    - name: Change ownership recursively
+    - name: Change ownership recursively on NFS
       become: true
       file:
         path: "{{ nfs_target_dir }}"
@@ -237,9 +231,15 @@
         group: "www-data"
         recurse: yes
 
-    - name: Change permissions recursively
+    - name: Change permissions recursively on NFS
       become: true
       file:
         path: "{{ nfs_target_dir }}"
         mode: "0775"
         recurse: yes
+
+    - name: Start apache
+      service:
+        name: apache2
+        state: started
+      become: yes    
