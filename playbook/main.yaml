@@ -210,12 +210,12 @@
         #run_once: true
       
 
-    - name: Run drush update db
-      become: true
-      command: "{{ drush }} updb -y"
-      args:
-        chdir: "/var/www"
-      run_once: true
+    # - name: Run drush update db
+    #   become: true
+    #   command: "{{ drush }} updb -y"
+    #   args:
+    #     chdir: "/var/www"
+    #   run_once: true
 
     - name: Change ownership recursively
       become: true
