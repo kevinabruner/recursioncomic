@@ -3,10 +3,8 @@ git_dir: /home/{{ ANSIBLE_USER }}/{{ APPLICATION }}
 APPLICATION: recursioncomic
 netbox_dns: netbox.thejfk.ca
 INTERFACE: eth0   
-internal_router: 191
 dev_db: 192.168.80.50
 prod_db: 192.168.80.60
-external_router: 201
 nfs_target_dir: /var/www/web/sites/default/files
 nfs_server: 192.168.11.20
 nfs_share: /mnt/yes/gitbuilds/{{ APPLICATION }}/files
