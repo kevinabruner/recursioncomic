@@ -2,18 +2,13 @@ ANSIBLE_USER: kevin
 git_dir: /home/{{ ANSIBLE_USER }}/{{ APPLICATION }}
 APPLICATION: recursioncomic
 netbox_dns: netbox.thejfk.ca
-certs_dir: "/opt/certs"
-keepalived_conf: "keepalived.conf"
-keepalived_dir: "/etc/keepalived/"
 INTERFACE: eth0   
 internal_router: 191
 dev_db: 192.168.80.50
 dev1: 192.168.80.15
 dev2: 192.168.80.16
-internal_vip: 192.168.80.17
 prod1: 192.168.80.18
 prod2: 192.168.80.19
-external_vip: 192.168.80.20
 prod_db: 192.168.80.60
 external_router: 201
 nfs_target_dir: /var/www/web/sites/default/files

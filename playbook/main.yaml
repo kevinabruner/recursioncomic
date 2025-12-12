@@ -23,7 +23,6 @@
         - vim
         - nfs-common
         - htop
-        - keepalived
       become: true
     
     - name: Enable apache2 service
@@ -32,23 +31,11 @@
         enabled: yes
       become: true
 
-    - name: Enable keepalived service
-      systemd:
-        name: keepalived
-        enabled: yes
-      become: true
-
     - name: Stop apache
       service:
         name: apache2
         state: stopped
       become: yes    
-
-    - name: Stop keepalived
-      service:
-        name: keepalived
-        state: stopped
-      become: yes
 
     - name: Ensure user kevin exists
       user:
@@ -72,133 +59,7 @@
         path: /etc/fstab
         line: "{{ nfs_server }}:{{ nfs_share }}    {{ nfs_target_dir }}    nfs    defaults    0 0"
         insertafter: EOF
-      become: true
-        
-    - name: Copy keepalived script template
-      copy:
-        src: "{{ git_dir }}/{{ keepalived_conf }}"
-        dest: "{{ keepalived_dir }}"
-      become: true          
-
-    - name: Extract last digit of IP address
-      set_fact:
-        last_digit: "{{ ansible_default_ipv4.address.split('.')[-1] | int }}"
-
-    - name: Master configuration
-      set_fact:
-        ROLE: "MASTER"
-        PRIORITY: 110
-      when: "(last_digit | int) % 2 != 0"    
-
-    - name: Backup configuration
-      set_fact:
-        ROLE: "BACKUP"        
-        PRIORITY: 100
-      when: "(last_digit | int) % 2 == 0"    
-    
-    - name: Display roles for the host
-      debug:
-        var: group_names
-
-    - name: Setting internal/dev IP
-      set_fact:
-        VIRT_IP: "{{ internal_vip }}"  
-        ROUTER_ID: "{{ internal_router }}"      
-        DB_HOST: "{{ dev_db }}"  
-      when:         
-        - "'dev' in group_names"
-    
-    - name: Setting external/prod IP
-      set_fact:
-        VIRT_IP: "{{ external_vip }}"
-        ROUTER_ID: "{{ external_router }}"        
-        DB_HOST: "{{ prod_db }}"  
-      when:         
-        - "'prod' in group_names"                  
-
-    - name: Setting peer IP for odd last digit in 'prod' group
-      set_fact:
-        peer_ip: "{{ prod1 }}"
-      when: 
-        - (last_digit | int) % 2 != 0
-        - "'prod' in group_names"
-
-    - name: Setting peer IP for even last digit in 'prod' group
-      set_fact:
-        peer_ip: "{{ prod2 }}"
-      when: 
-        - (last_digit | int) % 2 == 0
-        - "'prod' in group_names"
-
-    - name: Setting peer IP for odd last digit in 'dev' group
-      set_fact:
-        peer_ip: "{{ dev1 }}"
-      when: 
-        - (last_digit | int) % 2 != 0
-        - "'dev' in group_names"
-
-    - name: Setting peer IP for even last digit in 'dev' group
-      set_fact:
-        peer_ip: "{{ dev2 }}"
-      when: 
-        - (last_digit | int) % 2 == 0
-        - "'dev' in group_names"
-
-    - name: Replace "@@@MASTER_OR_SLAVE" in file
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        backrefs: yes        
-        regexp: '^.*@@@MASTER_OR_SLAVE.*$'
-        line: "  state {{ ROLE }}"  
-      become: yes
-
-    - name: Replace "@@@ROUTER_ID" in file
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        backrefs: yes        
-        regexp: '^.*@@@ROUTER_ID.*$'
-        line: "  virtual_router_id {{ ROUTER_ID }}"  
-      become: yes 
-
-    - name: Replace "@@@VIRT_IP" in file
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        backrefs: yes
-        regexp: '^.*@@@VIRT_IP.*$'
-        line: "    {{ VIRT_IP }}/24"
-      become: yes
-
-    - name: Replace "@@@PRIORITY" in file
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        backrefs: yes
-        regexp: '^.*@@@PRIORITY.*$'
-        line: "  priority {{ PRIORITY }}"
-      become: yes
-
-    - name: Replace @@@PEERS with unassigned IP
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        regexp: '^.*@@@PEERS.*$'
-        line: "    {{ peer_ip }}"
-        backrefs: yes
-      become: yes
-
-    - name: Replace "@@@INTERFACE" in file
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        backrefs: yes
-        regexp: '^.*@@@INTERFACE.*$'
-        line: "  interface {{ INTERFACE }}"
-      become: yes
-
-    - name: Replace "@@@SRC_IP" in file
-      lineinfile:
-        path: "{{ keepalived_dir }}/{{ keepalived_conf }}"
-        backrefs: yes        
-        regexp: '^.*@@@SRC_IP.*$'
-        line: "  unicast_src_ip {{ ansible_default_ipv4.address }}"  
-      become: yes
+      become: true              
 
     - name: Remove local build directory if it exists
       delegate_to: localhost
@@ -330,12 +191,6 @@
         name: apache2
         state: started
       become: yes    
-
-    - name: Start keepalived
-      service:
-        name: keepalived
-        state: started
-      become: yes
 
     - name: Create NFS mount point 
       file:
