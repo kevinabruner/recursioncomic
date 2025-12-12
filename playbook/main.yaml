@@ -261,7 +261,7 @@
     - name: Update DocumentRoot in Apache configuration
       become: true
       lineinfile:
-        path: /etc/apache2/sites-enabled/000-default.conf
+        path: /etc/apache2/sites-available/000-default.conf
         regexp: '^(\s*)DocumentRoot /var/www/html'
         line: 'DocumentRoot /var/www/web/'
         backup: yes
