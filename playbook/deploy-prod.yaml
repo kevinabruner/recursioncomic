@@ -6,4 +6,4 @@
   serial: 1  # Forces one-by-one execution
   tasks:
     - name: Deploy Drupal
-      import_tasks: deploy-global.yaml
+      import_tasks: tasks/deploy-global.yaml
