@@ -1,0 +1,9 @@
+- name: Parallel Deploy for Dev
+  hosts: dev
+  vars_files:
+    - vars.yaml
+    - vault.yaml
+  tasks:
+    - name: Deploy Drupal
+      import_tasks: deploy-global.yaml
+

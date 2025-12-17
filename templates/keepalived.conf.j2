@@ -1,0 +1,41 @@
+global_defs {
+  lvs_id {{ inventory_hostname }}
+  enable_script_security
+}
+
+vrrp_sync_group SyncGroup01 {
+  group {
+    FloatIP1
+  }
+}
+
+vrrp_script check_haproxy {
+  script "killall -0 haproxy"
+  interval 2
+  weight 2
+}
+
+{% set env_group = group_names | intersect(['dev', 'prod']) | first %}
+vrrp_instance FloatIP1 {
+    # Election Logic: The first node in the inventory list is MASTER
+    {% if inventory_hostname == groups[env_group][0] %}
+    state MASTER
+    priority 101
+    {% else %}
+    state BACKUP
+    priority 100
+    {% endif %}
+
+    interface eth0
+    # virtual_router_id and vip come from your group_vars or hostvars
+    virtual_router_id {{ router_id | default(51) }}
+    advert_int 1
+    
+    virtual_ipaddress {
+      {{ vip }}
+    }
+    
+    track_script {
+      check_haproxy
+    }
+}
