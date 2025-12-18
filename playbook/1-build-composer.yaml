@@ -20,7 +20,7 @@
 
     - name: Copy composer file
       copy:
-        src: "{{ git_dir }}/composer.json"
+        src: "{{ git_dir }}/drupal/composer.json"
         dest: "{{ git_dir }}/.build/composer.json" 
       run_once: true
 

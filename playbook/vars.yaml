@@ -1,11 +1,12 @@
 ANSIBLE_USER: kevin
 git_dir: /home/{{ ANSIBLE_USER }}/{{ APPLICATION }}
-APPLICATION: recursioncomic
 netbox_dns: netbox.thejfk.ca
-INTERFACE: eth0   
+INTERFACE: eth0
+APPLICATION: recursioncomic
 nfs_target_dir: /var/www/html/sites/default/files
 nfs_server: 192.168.11.20
 nfs_share: /mnt/yes/gitbuilds/{{ APPLICATION }}/files
 dbName: "{{ APPLICATION }}"
 username: "{{ APPLICATION }}"
 drush: /var/www/vendor/drush/drush/drush
+target_vm: "{{ APPLICATION }}-dev1"
