@@ -1,23 +1,31 @@
 #!/usr/bin/env python3
 import json
 import requests
+import subprocess
+import os
 
 # --- Configuration ---
 NETBOX_URL = "https://netbox.thejfk.ca/api"
 TOKEN = "18a09ac581f3b2679df0f538698e2893aac493a7"
-TARGET_REPO = "recursioncomic"
+
+def get_repo_name():
+    remote_url = subprocess.check_output(["git", "remote", "get-url", "origin"]).decode("utf-8").strip()
+    repo_name = remote_url.split("/")[-1].replace(".git", "")
+    return repo_name
+
 
 def get_netbox_data(endpoint):
     headers = {
         "Authorization": f"Token {TOKEN}",
         "Accept": "application/json"
     }
-    # We fetch all active VMs; we will filter them in Python for accuracy
     response = requests.get(f"{NETBOX_URL}/{endpoint}", headers=headers)
     response.raise_for_status()
     return response.json()
 
 def generate_inventory():
+    TARGET_REPO = get_repo_name()
+
     inventory = {
         "_meta": {"hostvars": {}},
         "all": {"children": [TARGET_REPO, "dev", "prod"]},

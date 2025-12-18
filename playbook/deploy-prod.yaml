@@ -1,9 +1,0 @@
-- name: Serial Rolling Deploy for Prod
-  hosts: prod
-  vars_files:
-    - vars.yaml
-    - vault.yaml
-  serial: 1  # Forces one-by-one execution
-  tasks:
-    - name: Deploy Drupal
-      import_tasks: tasks/deploy-global.yaml

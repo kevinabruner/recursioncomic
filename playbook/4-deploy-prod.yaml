@@ -1,0 +1,61 @@
+- name: Serial Rolling Deploy for Prod from golden images
+  hosts: prod
+  vars_files:
+    - vars.yaml
+    - vault.yaml
+  serial: 1  # Forces one-by-one execution
+  tasks:
+    - name: Force Terraform to recreate this specific node
+      delegate_to: tf-manager
+      shell: |
+        # Constructing the module path dynamically based on hostname
+        terraform taint 'module.{{ inventory_hostname }}.proxmox_vm_qemu.{{ inventory_hostname }}[0]'
+        terraform apply -target='module.{{ inventory_hostname }}.proxmox_vm_qemu.{{ inventory_hostname }}[0]' -auto-approve
+      args:
+        chdir: "/home/kevin/terraform"
+
+    - name: Clear old SSH host key from local machine
+      delegate_to: localhost
+      shell: "ssh-keygen -f ~/.ssh/known_hosts -R {{ ansible_host }}"
+      ignore_errors: true
+
+    - name: Wait for new VM to be SSH-ready
+      delegate_to: localhost
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        state: started
+        delay: 20
+        timeout: 300
+
+    - name: Enable and stop apache2 and keepalived
+      ansible.builtin.service:
+        name: "{{ item }}"
+        enabled: yes
+        state: stopped
+      loop:
+        - apache2
+        - keepalived
+      become: true 
+
+    - name: Copy keepalived configuration file
+      become: true
+      template:
+        src: "{{ git_dir }}/templates/keepalived.conf.j2"
+        dest: "/etc/keepalived/keepalived.conf"
+
+    - name: Copy php settings file
+      become: true
+      template:
+        src: "{{ git_dir }}/templates/settings.php.j2"
+        dest: "/var/www/html/sites/default/settings.php"     
+
+    - name: Start apache and keepalived
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      loop:
+        - apache2
+        - keepalived
+      become: true
