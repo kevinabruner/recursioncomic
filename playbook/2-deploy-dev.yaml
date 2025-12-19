@@ -106,7 +106,7 @@
       become: true
       template:
         src: "{{ git_dir }}/templates/haproxy-target.conf.j2"
-        dest: "/etc/apache2/sites-available/"     
+        dest: "/etc/apache2/sites-available/haproxy-target.conf"     
 
     - name:  enable haproxy-target site
       become: true
