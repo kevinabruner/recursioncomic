@@ -39,13 +39,13 @@
           poll: 5      # <--- Check progress every 2 seconds
 
         - name: Clone Dev VM
-          shell: |
-            qm clone {{ vm_id }} {{ template_vmid }} \
-            --full \
-            --name {{ APPLICATION }}-golden \
-            --storage truenas-nfs \
-            --target pve
           become: true
+          shell: >
+            qm clone {{ vm_id }} {{ template_vmid }} 
+            --full 
+            --name {{ APPLICATION }}-golden 
+            --storage truenas-nfs 
+            --target pve
 
 - name: Manipulate clone
   hosts: pve
