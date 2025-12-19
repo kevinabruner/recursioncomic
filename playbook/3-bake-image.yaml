@@ -38,13 +38,14 @@
               shell: "qm destroy {{ template_vmid }} --purge"
               delegate_to: pve  
         
-        - name: Clone Dev VM to a new Template ID on TrueNAS
+        - name: Clone Dev VM (Execute on PVE to avoid NUC1 file locks)
           shell: |
-            qm clone {{ hostvars[target_vm]['proxmox_vmid'] }} {{ hostvars[target_vm]['proxmox_vmid'] }}0 \
+            qm clone {{ vm_id }} {{ template_vmid }} \
             --full \
             --name {{ APPLICATION }}-golden \
-            --storage truenas-nfs \
-            --target pve
+            --storage truenas-nfs
+          delegate_to: pve  # <--- CRITICAL: Run the clone on the node where it will live
+          become: true
 
 - name: Manipulate clone
   hosts: pve
