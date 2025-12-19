@@ -100,7 +100,7 @@
 
     - name:  disable apache default site
       become: true
-      command: a2dissite *
+      command: a2dissite 000-default.conf
 
     - name: Copy the haproxy-target apache configuration file
       become: true
