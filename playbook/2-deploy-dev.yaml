@@ -71,7 +71,7 @@
 
     - name: Sync web directory
       ansible.posix.synchronize:
-        src: "{{ git_dir }}/.build/html/"  # Added trailing slash
+        src: "{{ git_dir }}/.build/html/" 
         dest: "/var/www/html/"
         delete: yes
         rsync_opts:

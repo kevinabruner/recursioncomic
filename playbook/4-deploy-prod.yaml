@@ -3,7 +3,7 @@
   vars_files:
     - vars.yaml
     - vault.yaml
-  serial: 1  # Forces one-by-one execution
+  serial: 1  
   tasks:
     - name: Force Terraform to recreate this specific node
       delegate_to: tf-manager
