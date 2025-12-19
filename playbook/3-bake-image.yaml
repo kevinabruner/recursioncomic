@@ -44,7 +44,7 @@
             --full \
             --name {{ APPLICATION }}-golden \
             --storage truenas-nfs
-          delegate_to: pve
+            --target pve
           become: true
 
 - name: Manipulate clone
