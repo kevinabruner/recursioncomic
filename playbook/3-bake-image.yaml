@@ -35,6 +35,8 @@
           delegate_to: pve  # <--- MUST destroy on PVE
           when: template_check.rc == 0
           become: true
+          async: 60    # <--- Timeout after 20 seconds
+          poll: 5      # <--- Check progress every 2 seconds
 
         - name: Clone Dev VM
           shell: |
