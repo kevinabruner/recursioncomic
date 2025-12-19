@@ -25,18 +25,18 @@
 
         - name: Check if old template exists ON PVE
           shell: "qm status {{ template_vmid }}"
-          delegate_to: pve  # <--- MUST check on PVE
+          delegate_to: pve  
           register: template_check
           failed_when: false
           changed_when: false
 
         - name: Destroy old template ON PVE
           shell: "qm destroy {{ template_vmid }} --purge"
-          delegate_to: pve  # <--- MUST destroy on PVE
+          delegate_to: pve  
           when: template_check.rc == 0
           become: true
-          async: 60    # <--- Timeout after 20 seconds
-          poll: 5      # <--- Check progress every 2 seconds
+          async: 60    
+          poll: 5      
 
         - name: Clone Dev VM
           become: true
