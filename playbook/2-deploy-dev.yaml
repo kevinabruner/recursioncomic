@@ -60,8 +60,7 @@
       become: true
       ansible.builtin.file:
         path: "/var/www/html/"
-        state: absent
-      run_once: true
+        state: absent      
 
     - name: Create config sync
       file:
@@ -123,6 +122,11 @@
         src: "{{ git_dir }}/drupal/themes/"
         dest: "/var/www/html/themes/contrib/"    
 
+    - name: Copy .bash_aliases
+      copy:
+        src: "{{ git_dir }}/drupal/.bash_aliases"
+        dest: "/home/{{ ANSIBLE_USER }}/"    
+
     - name: Set ownership to www-data on target web dir
       ansible.builtin.file:
         path: /var/www/
@@ -149,6 +153,9 @@
         group: "www-data"
         mode: "0775"
         recurse: yes
+    
+    - name: Refresh cache and dbs
+      import_tasks: tasks/update-cache-and-dbs.yaml
 
     - name: Start apache2qemu-guest-agent qemu and keepalived
       ansible.builtin.systemd:

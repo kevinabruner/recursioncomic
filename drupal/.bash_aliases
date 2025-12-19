@@ -1,0 +1,1 @@
+alias drush='/var/www/vendor/drush/drush/drush'

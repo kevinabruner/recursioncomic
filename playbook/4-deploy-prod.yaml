@@ -50,6 +50,9 @@
         src: "{{ git_dir }}/templates/settings.php.j2"
         dest: "/var/www/html/sites/default/settings.php"     
 
+    - name: Refresh cache and dbs
+      import_tasks: tasks/update-cache-and-dbs.yaml
+
     - name: Start apache and keepalived
       ansible.builtin.systemd:
         name: "{{ item }}"
@@ -59,3 +62,4 @@
         - apache2
         - keepalived
       become: true
+
