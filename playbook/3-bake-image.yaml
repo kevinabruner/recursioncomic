@@ -35,7 +35,8 @@
           when: template_check.rc == 0
           block:
             - name: Destroy old template via Proxmox
-              shell: "qm destroy {{ template_vmid }} --purge --target pve"
+              shell: "qm destroy {{ template_vmid }} --purge"
+              delegate_to: pve  
         
         - name: Clone Dev VM to a new Template ID on TrueNAS
           shell: |
