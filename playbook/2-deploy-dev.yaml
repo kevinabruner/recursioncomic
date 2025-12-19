@@ -94,9 +94,23 @@
         backup: yes
       become: true
 
-    - name: Enable Apache rewrite module
+    - name: Enable Apache rewrite and status modules
       become: true
-      command: a2enmod rewrite
+      command: a2enmod rewrite status
+
+    - name:  disable apache default site
+      become: true
+      command: a2dissite *
+
+    - name: Copy the haproxy-target apache configuration file
+      become: true
+      template:
+        src: "{{ git_dir }}/templates/haproxy-target.conf.j2"
+        dest: "/etc/apache2/sites-available/"     
+
+    - name:  enable haproxy-target site
+      become: true
+      command: a2ensite haproxy-target
 
     - name: Copy php settings file
       become: true
