@@ -28,21 +28,14 @@
         delay: 20
         timeout: 300
 
-    - name: Enable and stop apache2 and keepalived
+    - name: Enable and stop apache2
       ansible.builtin.service:
         name: "{{ item }}"
         enabled: yes
         state: stopped
       loop:
         - apache2
-        - keepalived
       become: true 
-
-    - name: Copy keepalived configuration file
-      become: true
-      template:
-        src: "{{ git_dir }}/templates/keepalived.conf.j2"
-        dest: "/etc/keepalived/keepalived.conf"
 
     - name: Copy php settings file
       become: true
@@ -50,16 +43,15 @@
         src: "{{ git_dir }}/templates/settings.php.j2"
         dest: "/var/www/html/sites/default/settings.php"     
 
-    #- name: Refresh cache and dbs
-    #  import_tasks: tasks/update-cache-and-dbs.yaml
+    - name: Refresh cache and dbs
+      import_tasks: tasks/update-cache-and-dbs.yaml
 
-    - name: Start apache and keepalived
+    - name: Start apache 
       ansible.builtin.systemd:
         name: "{{ item }}"
         enabled: yes
         state: started
       loop:
         - apache2
-        - keepalived
       become: true
 

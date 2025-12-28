@@ -23,26 +23,18 @@
         - vim
         - nfs-common
         - htop   
-        - keepalived
         - qemu-guest-agent
       become: true
 
-    - name: Enable and stop apache2, qemu and keepalived
+    - name: Enable and stop apache2 and qemu
       ansible.builtin.service:
         name: "{{ item }}"
         enabled: yes
         state: stopped
       loop:
         - apache2
-        - keepalived
         - qemu-guest-agent
       become: true 
-
-    - name: Copy keepalived configuration file
-      become: true
-      template:
-        src: "{{ git_dir }}/templates/keepalived.conf.j2"
-        dest: "/etc/keepalived/keepalived.conf"
 
     - name: Add NFS share entry to /etc/fstab
       lineinfile:
@@ -157,13 +149,12 @@
     - name: Refresh cache and dbs
       import_tasks: tasks/update-cache-and-dbs.yaml
 
-    - name: Start apache2qemu-guest-agent qemu and keepalived
+    - name: Start apache and qemu 
       ansible.builtin.systemd:
         name: "{{ item }}"
         enabled: yes
         state: started
       loop:
         - apache2
-        - keepalived
         - qemu-guest-agent
       become: true
