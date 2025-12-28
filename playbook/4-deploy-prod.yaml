@@ -43,9 +43,6 @@
         src: "{{ git_dir }}/templates/settings.php.j2"
         dest: "/var/www/html/sites/default/settings.php"     
 
-    - name: Refresh cache and dbs
-      import_tasks: tasks/update-cache-and-dbs.yaml
-
     - name: Start apache 
       ansible.builtin.systemd:
         name: "{{ item }}"
@@ -55,3 +52,11 @@
         - apache2
       become: true
 
+- name: Update DBs after deployment
+  hosts: prod
+  vars_files:
+    - vars.yaml
+    - vault.yaml
+  tasks:
+    - name: Refresh cache and dbs
+      import_tasks: tasks/update-cache-and-dbs.yaml
