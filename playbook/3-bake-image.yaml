@@ -46,6 +46,9 @@
             --name {{ APPLICATION }}-golden 
             --storage truenas-nfs 
 
+        - name: Migrate the clone to target node
+          shell: "qm migrate {{ template_vmid }} pve"
+
 - name: Manipulate clone
   hosts: pve
   vars_files:
