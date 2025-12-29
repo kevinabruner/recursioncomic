@@ -45,7 +45,6 @@
             --full 
             --name {{ APPLICATION }}-golden 
             --storage truenas-nfs 
-            --target pve
 
 - name: Manipulate clone
   hosts: pve
