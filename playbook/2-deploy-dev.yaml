@@ -1,5 +1,5 @@
 - name: Parallel Deploy for Dev
-  hosts: repo_koscinski:&env_dev
+  hosts: repo_recursioncomic:&env_dev
   vars_files:
     - vars.yaml
     - vault.yaml
