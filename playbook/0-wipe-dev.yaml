@@ -6,4 +6,4 @@
   serial: 1  
   tasks:
     - name: Wipe dev tasks from ansible 
-      import_tasks: /home/{{ ANSIBLE_USER }}/ansible/playbook/tasks/drupal/wipe-dev.yaml
+      import_tasks: /home/{{ ANSIBLE_USER }}/ansible/playbook/tasks/drupal/0-wipe-dev.yaml
