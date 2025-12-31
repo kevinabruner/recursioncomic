@@ -1,5 +1,5 @@
 - name: Re-deploy dev servers for fresh installation 
-  hosts: recursioncomic:&env_dev
+  hosts: repo_recursioncomic:&env_dev
   vars_files:
     - vars.yaml
     - vault.yaml
