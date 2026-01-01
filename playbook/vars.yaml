@@ -12,3 +12,11 @@ drush: /var/www/vendor/drush/drush/drush
 target_vm: "{{ APPLICATION }}-dev1"
 env: "{{ custom_fields.dev_or_prod }}"
 vmid: "{{ hostvars[target_vm]['custom_fields']['vmid'] }}"
+nfs_options:
+  - defaults
+  - x-systemd.automount
+  - x-systemd.idle-timeout=60s
+  - soft
+  - timeo=14
+  - retrans=2
+  - _netdev
