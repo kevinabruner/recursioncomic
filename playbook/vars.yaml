@@ -20,3 +20,4 @@ nfs_options:
   - timeo=14
   - retrans=2
   - _netdev
+  - fsc
