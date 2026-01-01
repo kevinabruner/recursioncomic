@@ -9,7 +9,7 @@
       import_tasks: /home/{{ ANSIBLE_USER }}/ansible/playbook/tasks/drupal/4a-deploy-prod-images.yaml
 
 - name: Update DBs after deployment
-  hosts: repo_koscinski:&env_prod
+  hosts: repo_recursioncomic:&env_prod
   vars_files:
     - vars.yaml
     - vault.yaml
