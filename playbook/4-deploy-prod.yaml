@@ -1,5 +1,5 @@
 - name: Serial Rolling Deploy for Prod from golden images
-  hosts: repo_koscinski:&env_prod
+  hosts: repo_recursioncomic:&env_prod
   vars_files:
     - vars.yaml
     - vault.yaml
