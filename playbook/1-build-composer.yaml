@@ -1,5 +1,7 @@
 - name: Build the Drupal composer files
   hosts: localhost
+  vars:
+    - APPLICATION: "recursioncomic"
   vars_files:
     - ../../ansible/playbook/drupal/vars.yaml
   tasks:      
