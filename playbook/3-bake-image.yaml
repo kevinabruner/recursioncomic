@@ -1,6 +1,8 @@
 - name: Create Production Template from Dev VM 
   hosts: role_proxmox_host:!legs"
   remote_user: root  
+  vars:
+    - APPLICATION: "recursioncomic"
   vars_files:
     - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml
@@ -11,6 +13,8 @@
 - name: Mod template from Dev VM 
   hosts: pve
   remote_user: root  
+  vars:
+    - APPLICATION: "recursioncomic"
   vars_files:
     - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml

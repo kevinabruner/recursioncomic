@@ -1,5 +1,7 @@
 - name: Re-deploy dev servers for fresh installation 
   hosts: repo_recursioncomic:&env_dev
+  vars:
+    - APPLICATION: "recursioncomic"
   vars_files:
     - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml

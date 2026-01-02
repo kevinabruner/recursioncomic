@@ -1,5 +1,7 @@
 - name: Serial Rolling Deploy for Prod from golden images
   hosts: repo_recursioncomic:&env_prod
+  vars:
+    - APPLICATION: "recursioncomic"
   vars_files:
     - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml
@@ -10,6 +12,8 @@
 
 - name: Update DBs after deployment
   hosts: repo_recursioncomic:&env_prod
+  vars:
+    - APPLICATION: "recursioncomic"
   vars_files:
     - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml
