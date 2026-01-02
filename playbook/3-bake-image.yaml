@@ -2,7 +2,7 @@
   hosts: role_proxmox_host:!legs"
   remote_user: root  
   vars_files:
-    - /home/{{ ANSIBLE_USER }}/ansible/playbook/drupal/vars.yaml
+    - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml
   tasks:
     - name: Create image template tasks from ansible 
@@ -12,7 +12,7 @@
   hosts: pve
   remote_user: root  
   vars_files:
-    - /home/{{ ANSIBLE_USER }}/ansible/playbook/drupal/vars.yaml
+    - ../../ansible/playbook/drupal/vars.yaml
     - vault.yaml
   tasks:
     - name: Create image template tasks from ansible 
