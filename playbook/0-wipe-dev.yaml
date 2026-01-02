@@ -1,9 +1,9 @@
 - name: Re-deploy dev servers for fresh installation 
   hosts: repo_recursioncomic:&env_dev
   vars_files:
-    - vars.yaml
+    - /home/{{ ANSIBLE_USER }}/ansible/playbook/drupal/vars.yaml
     - vault.yaml
   serial: 1  
   tasks:
     - name: Wipe dev tasks from ansible 
-      import_tasks: /home/{{ ANSIBLE_USER }}/ansible/playbook/tasks/drupal/0-wipe-dev.yaml
+      import_tasks: /home/{{ ANSIBLE_USER }}/ansible/playbook/drupal/tasks/0-wipe-dev.yaml
