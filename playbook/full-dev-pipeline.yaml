@@ -1,4 +1,4 @@
-- name: Update DNS, NFS and proxy configuration after netbox update
+- name: Rebuild dev servers from scratch with full drupal application running
   hosts: localhost
   vars_files:
   - vars.yaml

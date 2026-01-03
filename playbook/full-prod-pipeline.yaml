@@ -1,4 +1,4 @@
-- name: Update DNS, NFS and proxy configuration after netbox update
+- name: Promote dev image and deploy to all prod servers
   hosts: localhost
   vars_files:
   - vars.yaml
