@@ -21,7 +21,7 @@ $settings['hash_salt'] = 'thisiskindrandomiguess';
 $databases['default']['default'] = array (
   'database' => '{{ APPLICATION }}',
   'username' => '{{ APPLICATION }}',
-  'password' => '{{ db_password }}',
+  'password' => '{{ apps | selectattr("name", "equalto", APPLICATION) | map(attribute="pass") | first }}',
   'prefix' => '',
   'host' => 'db-{{ env }}.jfkhome',  'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
