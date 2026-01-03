@@ -1,0 +1,8 @@
+- name: Update DNS, NFS and proxy configuration after netbox update
+  hosts: localhost
+  vars_files:
+  - vars.yaml
+- name: Import "Bake image" playbook
+  import_playbook: 3-bake-image.yaml
+- name: Import "Deploy prod" playbook
+  import_playbook: 4-deploy-prod.yaml
