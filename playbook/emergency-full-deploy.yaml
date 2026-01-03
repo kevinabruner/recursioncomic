@@ -3,6 +3,6 @@
   vars_files:
   - vars.yaml
 - name: Import "Full dev pipeline" playbook
-  import_playbook: full-dev-pipleine.yaml
+  import_playbook: ./full-dev-pipeline.yaml
 - name: Import "Full prod pipeline" playbook
-  import_playbook: full-prod-pipleine.yaml
+  import_playbook: ./full-prod-pipeline.yaml
