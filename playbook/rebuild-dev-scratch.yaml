@@ -1,37 +1,10 @@
-- name: Re-deploy dev servers for fresh installation 
-  hosts: repo_recursioncomic:&env_dev
-  vars:
-    - APPLICATION: "recursioncomic"
-  vars_files:
-    - ../../ansible/playbook/drupal/vars.yaml
-    - vault.yaml
-  serial: 1  
-  tasks:
-    - name: Wipe dev tasks from ansible 
-      import_tasks: ../../ansible/playbook/drupal/tasks/0-wipe-dev.yaml
-
-- name: Build the Drupal composer files
+- name: Update DNS, NFS and proxy configuration after netbox update
   hosts: localhost
-  vars:
-    - APPLICATION: "recursioncomic"
   vars_files:
-    - ../../ansible/playbook/drupal/vars.yaml
-  tasks:      
-    - name: Build composer tasks from ansible
-      import_tasks: ../../ansible/playbook/drupal/tasks/1-build-composer.yaml
-
-- name: Parallel Deploy for Dev
-  hosts: repo_recursioncomic:&env_dev
-  vars:
-    - APPLICATION: "recursioncomic"
-  vars_files:
-    - ../../ansible/playbook/drupal/vars.yaml
-    - vault.yaml
-
-  pre_tasks:
-    - name: Check build dir tasks from ansible 
-      import_tasks: ../../ansible/playbook/drupal/tasks/check-build-dir.yaml
-  
-  tasks:
-    - name: Deploy dev tasks from ansible 
-      import_tasks: ../../ansible/playbook/drupal/tasks/2-deploy-dev.yaml
+  - vars.yaml
+- name: Import "Wipe dev" playbook
+  import_playbook: 0-wipe-dev.yaml
+- name: Import "Build composer" playbook
+  import_playbook: 1-build-composer.yaml
+- name: Import "Deploy dev" playbook
+  import_playbook: 2-deploy-dev.yaml
