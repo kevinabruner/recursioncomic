@@ -19,9 +19,9 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 $settings['hash_salt'] = 'thisiskindrandomiguess';
 
 $databases['default']['default'] = array (
-  'database' => '{{ APPLICATION }}',
-  'username' => '{{ APPLICATION }}',
-  'password' => '{{ apps | selectattr("name", "equalto", APPLICATION) | map(attribute="pass") | first }}',
+  'database' => '{{ current_app }}',
+  'username' => '{{ current_app }}',
+  'password' => '{{ apps | selectattr("name", "equalto", current_app) | map(attribute="pass") | first }}',
   'prefix' => '',
   'host' => 'db-{{ env }}.jfkhome',  'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
