@@ -1,0 +1,30 @@
+<?php
+
+$config['system.logging']['error_level'] = 'verbose';
+
+$settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
+
+
+$settings['file_scan_ignore_directories'] = [
+  'node_modules',
+  'bower_components',
+];
+
+$settings['entity_update_batch_size'] = 50;
+
+$settings['entity_update_backup'] = TRUE;
+
+$settings['migrate_node_migrate_type_classic'] = FALSE;
+
+$settings['hash_salt'] = 'thisiskindrandomiguess';
+
+$databases['default']['default'] = array (
+  'database' => '{{ current_app }}',
+  'username' => '{{ current_app }}',
+  'password' => '{{ apps | selectattr("name", "equalto", current_app) | map(attribute="pass") | first }}',
+  'prefix' => '',
+  'host' => 'db-{{ env }}.jfkhome',  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['config_sync_directory'] = '../sync';

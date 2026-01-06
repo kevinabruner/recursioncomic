@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+    <Location "/server-status">
+        SetHandler server-status
+        RewriteEngine Off
+        Require ip 192.168.0.0/16
+        Require local
+    </Location>      
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html        
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined        
+</VirtualHost>
