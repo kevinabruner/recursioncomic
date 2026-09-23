@@ -22,7 +22,6 @@
         "drupal/better_social_sharing_buttons": "^4.0",
         "drupal/bootstrap": "^3.4",
         "drupal/bootstrap_layout_builder": "^2.1",
-        "drupal/color": "^1.0",
         "drupal/core-composer-scaffold": "^11.3",
         "drupal/core-project-message": "^11.3",
         "drupal/core-recommended": "^11.3",
