@@ -35,7 +35,9 @@
         "drush/drush": "^13.0",
         "drupal/jquery_ui": "^1.8",
         "drupal/jquery_ui_draggable": "^2.1",
-        "drupal/jquery_ui_resizable": "^2.0"
+        "drupal/jquery_ui_resizable": "^2.0",
+        "drupal/purge": "^3.7",
+        "drupal/varnish_purge": "^2.3"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -44,6 +46,7 @@
     "prefer-stable": true,
     "config": {
         "allow-plugins": {
+            "symfony/runtime": true,
             "composer/installers": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
