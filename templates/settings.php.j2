@@ -10,6 +10,16 @@ $settings['file_scan_ignore_directories'] = [
   'bower_components',
 ];
 
+// Enable reverse proxy support
+$settings['reverse_proxy'] = TRUE;
+
+// DMZ subnets
+$settings['reverse_proxy_addresses'] = [
+    '192.168.71.0/24', 
+    '192.168.70.0/24', 
+    '127.0.0.1',
+];
+
 $settings['entity_update_batch_size'] = 50;
 
 $settings['entity_update_backup'] = TRUE;
