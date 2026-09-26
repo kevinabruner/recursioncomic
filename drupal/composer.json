@@ -26,7 +26,6 @@
         "drupal/core-project-message": "^11.3",
         "drupal/core-recommended": "^11.3",
         "drupal/flippy": "^2.0@beta",
-        "drupal/google_analytics": "^4.0",
         "drupal/login_destination": "^2.0@beta",
         "drupal/pathauto": "^1.12",
         "drupal/quickedit": "^1.0",
@@ -37,7 +36,6 @@
         "drupal/jquery_ui_draggable": "^2.1",
         "drupal/jquery_ui_resizable": "^2.0",
         "drupal/purge": "^3.7",
-        "drupal/varnish_purge": "^2.3",
         "drupal/purge_purger_http":"^1.3",
         "twig/twig":"~3.29.0"
     },
