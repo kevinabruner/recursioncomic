@@ -2,7 +2,15 @@
 
 /**
  * @file
- * Bootstrap sub-theme.
- *
- * Place your custom PHP code in this file.
+ * Functions to support theming in your custom theme.
  */
+
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function mytheme_preprocess_html(&$variables) {
+  // Pulls 'umami_website_id' directly from settings.php
+  $variables['umami_website_id'] = Settings::get('umami_website_id', '');
+}
