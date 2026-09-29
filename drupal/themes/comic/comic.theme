@@ -10,7 +10,7 @@ use Drupal\Core\Site\Settings;
 /**
  * Implements hook_preprocess_html().
  */
-function mytheme_preprocess_html(&$variables) {
+function comic_preprocess_html(&$variables) {
   // Pulls 'umami_website_id' directly from settings.php
   $variables['umami_website_id'] = Settings::get('umami_website_id', '');
 }
