@@ -6,7 +6,7 @@
     <css-placeholder token="{{ placeholder_token|raw }}">
     <js-placeholder token="{{ placeholder_token|raw }}">
     <!-- Umami Analytics -->
-    {% if umami_website_id %}
+    <!-- DEBUG UMAMI ID: "{{ umami_website_id }}" -->
       <script defer src="https://umami.thejfk.ca/script.js" data-website-id="{{ umami_website_id }}"></script>
     {% endif %}
   </head>
