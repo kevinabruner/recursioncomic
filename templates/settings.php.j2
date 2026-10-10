@@ -4,6 +4,10 @@ $config['system.logging']['error_level'] = 'verbose';
 
 $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+  $_SERVER['HTTPS'] = 'on';
+}
+
 
 $settings['file_scan_ignore_directories'] = [
   'node_modules',
